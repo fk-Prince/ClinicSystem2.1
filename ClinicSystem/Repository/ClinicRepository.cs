@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Drawing;
 using System.Numerics;
 using System.Windows.Forms;
 using ClinicSystem.Entity;
@@ -205,6 +206,8 @@ namespace ClinicSystem.MainClinic
                                 ORDER BY revenue DESC
                                 LIMIT 1 
                             ";
+
+                //startschedule BETWEEN DATE_FORMAT(CURRENT_DATE - INTERVAL 1 MONTH, '%Y-%m-01') AND LAST_DAY(CURRENT_DATE -INTERVAL 1 MONTH)
                     using (MySqlCommand command = new MySqlCommand(query, conn))
                     {
                         using (MySqlDataReader reader = command.ExecuteReader())
