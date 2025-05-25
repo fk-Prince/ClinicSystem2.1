@@ -248,7 +248,6 @@ namespace ClinicSystem
             {
                 e.Cancel = true;
             }
-
         }
  
         public void changeTab(int index)

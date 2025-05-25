@@ -225,7 +225,17 @@ namespace ClinicSystem.Doctors
             docOp = doctorRepository.getDoctorOperations();
             if (string.IsNullOrWhiteSpace(SearchBar.Text.Trim()))
             {
-                displayGrid(docOp);
+                Dictionary<Doctor, Operation> filter = new Dictionary<Doctor, Operation>();
+                if (active.Checked)
+                {
+                    filter = docOp.Where(d => d.Key.DoctorActive).ToDictionary(x => x.Key, x => x.Value);
+
+                }
+                else if (inactive.Checked)
+                {
+                    filter = docOp.Where(d => !d.Key.DoctorActive).ToDictionary(x => x.Key, x => x.Value);
+                }
+                displayGrid(filter);
             }
             else 
             {
@@ -268,11 +278,14 @@ namespace ClinicSystem.Doctors
             if (active.Checked)
             {
                 filter = filter.Where(d => d.Key.DoctorActive).ToDictionary(x => x.Key, x => x.Value);
+            
             }
             else if (inactive.Checked)
             {
                 filter = filter.Where(d => !d.Key.DoctorActive).ToDictionary(x => x.Key, x => x.Value);
             }
+
+            
             displayGrid(filter);
            
         }
