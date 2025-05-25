@@ -104,10 +104,10 @@
             this.label13.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.Location = new System.Drawing.Point(0, 83);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(572, 13);
+            this.label13.Size = new System.Drawing.Size(688, 13);
             this.label13.TabIndex = 10084;
-            this.label13.Text = "Note:  Rescheduling is only allowed within 1 week of the original appointment. a " +
-    "15% penalty will be charged";
+            this.label13.Text = "Note: Missed appointments may only be rescheduled within 1 week from the original" +
+    " appointment date, with a 15% penalty applied.";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // guna2Panel2

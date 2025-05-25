@@ -56,9 +56,9 @@
             this.tbOname = new Guna.UI2.WinForms.Guna2TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.panel10 = new System.Windows.Forms.Panel();
+            this.label13 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.panel11 = new System.Windows.Forms.Panel();
-            this.label13 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel12.SuspendLayout();
             this.panelRoomNo.SuspendLayout();
@@ -496,6 +496,18 @@
             this.panel10.Size = new System.Drawing.Size(1089, 96);
             this.panel10.TabIndex = 10086;
             // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(2, 79);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(502, 13);
+            this.label13.TabIndex = 10085;
+            this.label13.Text = "Note:  Rescheduling is only allowed if done at least 4 days before the original a" +
+    "ppointment date";
+            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // label10
             // 
             this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -519,18 +531,6 @@
             this.panel11.Name = "panel11";
             this.panel11.Size = new System.Drawing.Size(1080, 2);
             this.panel11.TabIndex = 10082;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(2, 79);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(432, 13);
-            this.label13.TabIndex = 10085;
-            this.label13.Text = "Note:  Rescheduling is only allowed within 3 days before the original appointment" +
-    "\r\n";
-            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // RescheduleForm
             // 
