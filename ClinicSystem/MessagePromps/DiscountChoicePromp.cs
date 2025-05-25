@@ -82,7 +82,7 @@ namespace ClinicSystem.UserLoginForm
                          app.Patient, app.Doctor, app.Operation,
                          app.StartTime, app.EndTime,
                          app.SubTotal, app.RoomNo, app.AppointmentDetailNo,
-                         total, selectedDiscount.Discounttype,
+                         total, selectedDiscount,
                          "", DateTime.Now, "Upcoming",app.Prescription));
                 }  
                 appointmentRepository.insertAppointment(staffid,patient,newApp,type);

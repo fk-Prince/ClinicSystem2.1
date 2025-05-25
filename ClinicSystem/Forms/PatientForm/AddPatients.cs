@@ -278,7 +278,8 @@ namespace ClinicSystem
         // SETUP OPERATION SELECTED
         private void comboOperation_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (selectedOperation == null) return;
+            if (comboOperation.SelectedIndex == -1) return;
+            
             selectedOperation = operationList.Find(op => op.OperationCode == comboOperation.SelectedItem.ToString().Split('|')[0].Trim());
             startC.Enabled = true;
             startC.SelectedIndex = -1;
@@ -286,8 +287,9 @@ namespace ClinicSystem
 
             comboDoctor.Items.Clear();
             comboRoom.Items.Clear();
-   
+
             doctorList = doctorRepository.getDoctorsByOperation(selectedOperation);
+    
             if (doctorList != null && doctorList.Count != 0)
             {
                 foreach (Doctor doctor in doctorList)

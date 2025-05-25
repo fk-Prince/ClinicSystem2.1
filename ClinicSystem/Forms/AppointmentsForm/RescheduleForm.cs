@@ -19,8 +19,7 @@ namespace ClinicSystem.Appointments
         {
             InitializeComponent();
             activeAppointments = appointmentRepository.getReAppointment();
-
-            DateTime currentDate = DateTime.Now;
+            
             AutoCompleteStringCollection auto = new AutoCompleteStringCollection();
             foreach (Appointment appointment in activeAppointments)
             {
@@ -246,7 +245,7 @@ namespace ClinicSystem.Appointments
                 selectedAppointment.RoomNo,
                 selectedAppointment.AppointmentDetailNo,
                 selectedAppointment.Total,
-                selectedAppointment.Discounttype,
+                selectedAppointment.Discount,
                 selectedAppointment.Diagnosis,
                 selectedAppointment.BookingDate,
                 selectedAppointment.Status,

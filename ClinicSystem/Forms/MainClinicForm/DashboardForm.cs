@@ -522,7 +522,7 @@ namespace ClinicSystem.MainClinic
             }
         }
 
-      
+       
 
         private void todayAppT_Tick(object sender, EventArgs e)
         {

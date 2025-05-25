@@ -79,8 +79,16 @@ namespace ClinicSystem
                 Appointment a = app[i];
                 e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(223, 249, 245)), 30, y - 10, this.Width - 30, 40);
                 e.Graphics.DrawString($"Appointment No.  {a.AppointmentDetailNo}", mainFont, Brushes.Black, x, y);
-                size1 = graphics.MeasureString($"Subtotal Amount.  {a.SubTotal.ToString("F2")}", mainFont);
-                e.Graphics.DrawString($"Subtotal Amount:  {a.SubTotal.ToString("F2")}", mainFont, Brushes.Black, 800 - size1.Width, y);
+                if (type.Equals("Penalty") || type.Equals("Reappointment"))
+                {
+                    size1 = graphics.MeasureString($"Total Amount.  {a.Total.ToString("F2")}", mainFont);
+                    e.Graphics.DrawString($"Total Amount:  {a.Total.ToString("F2")}", mainFont, Brushes.Black, 800 - size1.Width, y);
+                }
+                else if (type.Equals("Add"))
+                {
+                    size1 = graphics.MeasureString($"Subtotal Amount.  {a.SubTotal.ToString("F2")}", mainFont);
+                    e.Graphics.DrawString($"Subtotal Amount:  {a.SubTotal.ToString("F2")}", mainFont, Brushes.Black, 800 - size1.Width, y);
+                }
                 e.Graphics.DrawRectangle(Pens.Black, 30, y - 10, this.Width - 30, 40);
                 e.Graphics.DrawRectangle(Pens.Black, 30, y - 10, this.Width - 30, 170);
                 e.Graphics.DrawString($"Doctor Name:  {a.Doctor.DoctorLastName}, {a.Doctor.DoctorFirstName} {a.Doctor.DoctorMiddleName}", mainFont, Brushes.Black, x, y + 50);
@@ -183,8 +191,8 @@ namespace ClinicSystem
         private void drawTotal(PrintPageEventArgs e, float y)
         {
             DiscountRepository discountRepotisory = new DiscountRepository();
-            string discountType = app.FirstOrDefault().Discounttype;
-            Discount d = discountRepotisory.getDiscountsbyType(discountType);
+            //string discountType = app.FirstOrDefault().Discount;
+            //Discount d = discountRepotisory.getDiscountsbyType(discountType);
 
             Graphics graphics = Graphics.FromHwnd(IntPtr.Zero);
             Font font = new Font("Sans-serif", 14, FontStyle.Regular);
@@ -195,7 +203,7 @@ namespace ClinicSystem
             {
 
                 SizeF size2 = graphics.MeasureString($"₱  {selected.PenaltyAppointment.PenaltyAmount.ToString("F2")}", font);
-                e.Graphics.DrawString("Penalty Fee:", font, Brushes.Black, 410, y);
+                e.Graphics.DrawString("Penalty Fee 15%:", font, Brushes.Black, 410, y);
                 e.Graphics.DrawString($"₱  {selected.PenaltyAppointment.PenaltyAmount.ToString("F2")}", font, Brushes.Black, 820 - size2.Width, y);   
             } 
             else if (type.Equals("Add"))
@@ -206,18 +214,17 @@ namespace ClinicSystem
                 e.Graphics.DrawString($"₱  {stotal}", font, Brushes.Black, 820 - size1.Width, y);
 
                 y += 30;
-                string discount = app.Sum(a => a.SubTotal * d.DiscountRate).ToString("F2");
+                string discount = app.Sum(a => a.SubTotal * a.Discount.DiscountRate).ToString("F2");
                 SizeF size2 = graphics.MeasureString($"₱  {discount}", font);
                 e.Graphics.DrawString("Discounted:", font, Brushes.Black, 410, y);
                 e.Graphics.DrawString($"₱  {discount}", font, Brushes.Black, 820 - size2.Width, y);
                 y += 30;
-                string total = app.Sum(a => a.SubTotal - (a.SubTotal * d.DiscountRate)).ToString("F2");
+                string total = app.Sum(a => a.Total).ToString("F2");
                 y += 30;
                 Font tfont = new Font("Sans-serif", 14, FontStyle.Bold);
                 SizeF size3 = graphics.MeasureString($"₱ {total}", tfont);
                 e.Graphics.DrawString("Total Ammount:", tfont, Brushes.Black, 410, y);
                 e.Graphics.DrawString($"₱ {total}", tfont, Brushes.Black, 820 - size3.Width, y);
-
             }
 
        

@@ -74,9 +74,10 @@ namespace ClinicSystem.MainClinic
                     conn.Open();
                     string query = @"
                                     SELECT 
-                                        COALESCE(SUM(appointmentrecord_tbl.totalWithDiscount), 0) + COALESCE(SUM(appointmentpenalty_tbl.Amount), 0) AS Earnings
+                                        COALESCE(SUM(appointmentdetails_tbl.totalWithDiscount), 0) + COALESCE(SUM(appointmentpenalty_tbl.Amount), 0) AS Earnings
                                     FROM appointmentrecord_tbl 
                                     LEFT JOIN patientappointment_tbl ON patientappointment_tbl.appointmentrecordno = appointmentrecord_tbl.appointmentrecordno
+                                    LEFT JOIN appointmentdetails_tbl ON patientappointment_tbl.appointmentdetailno = appointmentdetails_tbl.appointmentdetailno
                                     LEFT JOIN appointmentpenalty_tbl 
                                         ON patientappointment_tbl.AppointmentDetailNo = appointmentpenalty_tbl.AppointmentDetailNo";
                     using (MySqlCommand command = new MySqlCommand(query, conn))
@@ -107,6 +108,7 @@ namespace ClinicSystem.MainClinic
                     string query = @"
                                  SELECT * FROM appointmentRecord_tbl
                                  LEFT JOIN patientappointment_tbl ON appointmentRecord_tbl.AppointmentRecordNo = patientappointment_tbl.AppointmentRecordNo
+                                 INNER JOIN discount_tbl ON discount_tbl.DiscountType = appointmentRecord_tbl.DiscountType
                                  LEFT JOIN patient_tbl ON patient_tbl.patientid = appointmentRecord_tbl.patientid
                                  LEFT JOIN doctor_tbl ON doctor_tbl.doctorId = patientappointment_tbl.doctorId
                                  LEFT JOIN operation_tbl ON operation_tbl.operationCode = patientappointment_tbl.OperationCode
@@ -148,7 +150,7 @@ namespace ClinicSystem.MainClinic
                                 COUNT(patientappointment_tbl.appointmentdetailno) AS totalAppointment,
                                 COUNT(DISTINCT appointmentrecord_tbl.patientid) AS totalPatient,
                                 doctor_tbl.*,
-                                sum(appointmentrecord_tbl.totalWithDiscount) as REVENUE
+                                sum(appointmentdetails_tbl.totalWithDiscount) as REVENUE
                                 FROM appointmentrecord_tbl
                                 INNER JOIN patientappointment_tbl ON appointmentrecord_tbl.AppointmentRecordNo =  patientappointment_tbl.AppointmentRecordNo
                                 INNER JOIN appointmentdetails_tbl ON appointmentdetails_tbl.appointmentdetailno = patientappointment_tbl.appointmentdetailno
@@ -193,7 +195,7 @@ namespace ClinicSystem.MainClinic
                                 COUNT(patientappointment_tbl.appointmentdetailno) AS totalAppointment,
                                 COUNT(DISTINCT appointmentrecord_tbl.patientid) AS totalPatient,
                                 doctor_tbl.*,
-                                sum(appointmentrecord_tbl.totalWithDiscount) as REVENUE
+                                sum(appointmentdetails_tbl.totalWithDiscount) as REVENUE
                                 FROM appointmentrecord_tbl
                                 INNER JOIN patientappointment_tbl ON appointmentrecord_tbl.AppointmentRecordNo =  patientappointment_tbl.AppointmentRecordNo
                                 INNER JOIN appointmentdetails_tbl ON appointmentdetails_tbl.appointmentdetailno = patientappointment_tbl.appointmentdetailno
@@ -239,6 +241,7 @@ namespace ClinicSystem.MainClinic
                     string query = @"
                                  SELECT * FROM appointmentRecord_tbl
                                  LEFT JOIN patientappointment_tbl ON appointmentRecord_tbl.AppointmentRecordNo = patientappointment_tbl.AppointmentRecordNo
+                                 INNER JOIN discount_tbl ON discount_tbl.DiscountType = appointmentRecord_tbl.DiscountType
                                  LEFT JOIN patient_tbl ON patient_tbl.patientid = appointmentRecord_tbl.patientid
                                  LEFT JOIN doctor_tbl ON doctor_tbl.doctorId = patientappointment_tbl.doctorId
                                  LEFT JOIN operation_tbl ON operation_tbl.operationCode = patientappointment_tbl.OperationCode
@@ -276,11 +279,13 @@ namespace ClinicSystem.MainClinic
                     string query = @"
                                  SELECT * FROM appointmentRecord_tbl
                                  LEFT JOIN patientappointment_tbl ON appointmentRecord_tbl.AppointmentRecordNo = patientappointment_tbl.AppointmentRecordNo
+                                 INNER JOIN discount_tbl ON discount_tbl.DiscountType = appointmentRecord_tbl.DiscountType   
                                  LEFT JOIN patient_tbl ON patient_tbl.patientid = appointmentRecord_tbl.patientid
                                  LEFT JOIN doctor_tbl ON doctor_tbl.doctorId = patientappointment_tbl.doctorId
                                  LEFT JOIN operation_tbl ON operation_tbl.operationCode = patientappointment_tbl.OperationCode
                                  LEFT JOIN appointmentdetails_tbl ON appointmentdetails_tbl.AppointmentDetailNo = patientappointment_tbl.AppointmentDetailNo          
-                                 WHERE EndSchedule < NOW() AND Status = 'Upcoming' OR Status = 'Reappointment'
+                                 WHERE EndSchedule < NOW() AND (Status = 'Upcoming' OR Status = 'Reappointment')
+                                 ORDER BY patientappointment_tbl.appointmentdetailno ASC
                                 ";
                     using (MySqlCommand command = new MySqlCommand(query, conn))
                     {
@@ -333,7 +338,7 @@ namespace ClinicSystem.MainClinic
                 using (MySqlConnection conn = new MySqlConnection(DatabaseConnection.getConnection()))
                 {
                     conn.Open();
-                    string query = @"SELECT COUNT(*) AS miss FROM patientappointment_tbl WHERE StartSchedule < NOW() AND Status = 'Upcoming' OR Status = 'Reappointment'";
+                    string query = @"SELECT COUNT(*) AS miss FROM patientappointment_tbl WHERE StartSchedule < NOW() AND (Status = 'Upcoming' OR Status = 'Reappointment')";
                     using (MySqlCommand command = new MySqlCommand(query, conn))
                     {
                         using(MySqlDataReader reader = command.ExecuteReader())
@@ -370,17 +375,19 @@ namespace ClinicSystem.MainClinic
                                  FROM 
                                     (
                                       	SELECT 
-                                            COALESCE(SUM(DISTINCT appointmentrecord_tbl.totalwithdiscount), 0) + COALESCE(SUM(appointmentpenalty_tbl.amount), 0) AS Revenue
+                                            COALESCE(SUM(DISTINCT appointmentdetails_tbl.totalwithdiscount), 0) + COALESCE(SUM(appointmentpenalty_tbl.amount), 0) AS Revenue
 	                                    FROM appointmentrecord_tbl
 	                                    LEFT JOIN patientappointment_tbl ON patientappointment_tbl.AppointmentRecordNo = appointmentrecord_tbl.AppointmentRecordNo
                                         LEFT JOIN appointmentpenalty_tbl ON patientappointment_tbl.appointmentdetailno = appointmentpenalty_tbl.appointmentdetailno
+                                        LEFT JOIN appointmentdetails_tbl ON patientappointment_tbl.appointmentdetailno = appointmentdetails_tbl.appointmentdetailno
                                             WHERE appointmentrecord_tbl.BookingDate BETWEEN DATE_FORMAT(CURRENT_DATE, '%Y-%m-01') AND LAST_DAY(CURRENT_DATE)
                                     ) AS currentmonth,
                                     (
                                        	SELECT 
-                                            COALESCE(SUM(DISTINCT appointmentrecord_tbl.totalwithdiscount), 0) + COALESCE(SUM(appointmentpenalty_tbl.amount), 0) AS Revenue
+                                            COALESCE(SUM(DISTINCT appointmentdetails_tbl.totalwithdiscount), 0) + COALESCE(SUM(appointmentpenalty_tbl.amount), 0) AS Revenue
 	                                    FROM appointmentrecord_tbl
 	                                    LEFT JOIN patientappointment_tbl ON patientappointment_tbl.AppointmentRecordNo = appointmentrecord_tbl.AppointmentRecordNo
+                                        LEFT JOIN appointmentdetails_tbl ON patientappointment_tbl.appointmentdetailno = appointmentdetails_tbl.appointmentdetailno
                                         LEFT JOIN appointmentpenalty_tbl ON patientappointment_tbl.appointmentdetailno = appointmentpenalty_tbl.appointmentdetailno
                                             WHERE appointmentrecord_tbl.BookingDate BETWEEN DATE_FORMAT(CURRENT_DATE - INTERVAL 1 MONTH, '%Y-%m-01') AND LAST_DAY(CURRENT_DATE - INTERVAL 1 MONTH)
                                     ) AS lastmonth

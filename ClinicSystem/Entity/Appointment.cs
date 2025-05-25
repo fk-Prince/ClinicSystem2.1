@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ClinicSystem.Entity;
 using ClinicSystem.PatientForm;
+using ClinicSystem.UserLoginForm;
 
 namespace ClinicSystem
 {
@@ -24,7 +25,7 @@ namespace ClinicSystem
 
         private int appointmentDetailNo;
         private double total;
-        private string discounttype;
+        private Discount discounttype;
         private string diagnosis;
         private string status;
         private string prescription;
@@ -33,7 +34,7 @@ namespace ClinicSystem
         public Appointment(Patient patient,
            Doctor doctor, Operation operation,
            DateTime startTime, DateTime endTime, double subtotal,
-           int roomno, int appointmentDetailNo, double total, string discounttype, string diagnosis, DateTime bookingDate,string status,string prescription)
+           int roomno, int appointmentDetailNo, double total, Discount discounttype, string diagnosis, DateTime bookingDate,string status,string prescription)
         {
             this.patient = patient;
             this.startTime = startTime;
@@ -69,7 +70,7 @@ namespace ClinicSystem
         public Appointment(Patient patient,
            Operation operation,
            DateTime startTime, DateTime endTime, double subtotal,
-           int roomno, int appointmentDetailNo, double total, string discounttype, string diagnosis, DateTime bookingDate, string status, string prescription)
+           int roomno, int appointmentDetailNo, double total, Discount discounttype, string diagnosis, DateTime bookingDate, string status, string prescription)
         {
             this.patient = patient;
             this.startTime = startTime;
@@ -91,7 +92,7 @@ namespace ClinicSystem
         public Appointment(Patient patient,
            Doctor doctor, Operation operation,
            DateTime startTime, DateTime endTime, double subtotal,
-           int roomno, int appointmentDetailNo, double total, string discounttype, string diagnosis, DateTime bookingDate, string status, PenaltyAppointment penaltyAppointment)
+           int roomno, int appointmentDetailNo, double total, Discount discounttype, string diagnosis, DateTime bookingDate, string status, PenaltyAppointment penaltyAppointment)
         {
             this.patient = patient;
             this.startTime = startTime;
@@ -123,7 +124,7 @@ namespace ClinicSystem
 
         public double SubTotal { get => subtotal;  }
         public string Status { get => status; }
-        public string Discounttype { get => discounttype; }
+        public Discount Discount { get => discounttype; }
 
         public string Prescription { get => prescription; }
         public int RoomNo { get => roomno; }

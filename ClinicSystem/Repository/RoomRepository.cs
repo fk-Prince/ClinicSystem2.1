@@ -23,7 +23,10 @@ namespace ClinicSystem.Rooms
                 using (MySqlConnection conn = new MySqlConnection(DatabaseConnection.getConnection()))
                 {
                     conn.Open();
-                    string query = "SELECT * FROM Rooms_tbl LEFT JOIN roomtype_tbl ON Rooms_tbl.RoomType = roomtype_tbl.RoomType";
+                    string query =@"
+                                SELECT * FROM Rooms_tbl 
+                                LEFT JOIN roomtype_tbl ON Rooms_tbl.RoomType = roomtype_tbl.RoomType
+                                ORDER BY roomno ASC";
                     using (MySqlCommand command = new MySqlCommand(query, conn))
                     {
                         using (MySqlDataReader reader = command.ExecuteReader())

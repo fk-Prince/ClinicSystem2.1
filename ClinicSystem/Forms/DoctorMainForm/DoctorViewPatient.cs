@@ -299,7 +299,7 @@ namespace ClinicSystem
                 selectedAppointment.RoomNo,
                 selectedAppointment.AppointmentDetailNo,
                 selectedAppointment.Total,
-                selectedAppointment.Discounttype,
+                selectedAppointment.Discount,
                 tbDiagnosis.Text.Trim(),
                 selectedAppointment.BookingDate,
                 selectedAppointment.Status,
@@ -379,6 +379,7 @@ namespace ClinicSystem
 
         private void guna2Button4_Click(object sender, EventArgs e)
         {
+
             if (appointmentDetailNoCombo.SelectedIndex == -1)
             {
                 MessagePromp.MainShowMessage(this, "Please Select an Appointment ID.", MessageBoxIcon.Error);
@@ -387,11 +388,29 @@ namespace ClinicSystem
 
             int appointmentDetailNo = int.Parse(appointmentDetailNoCombo.SelectedItem.ToString());
 
+            Appointment ap = new Appointment(
+                selectedAppointment.Patient,
+                selectedAppointment.Operation,
+                selectedAppointment.StartTime,
+                selectedAppointment.EndTime,
+                selectedAppointment.SubTotal,
+                selectedAppointment.RoomNo,
+                selectedAppointment.AppointmentDetailNo,
+                selectedAppointment.Total,
+                selectedAppointment.Discount,
+                selectedAppointment.Diagnosis,
+                selectedAppointment.BookingDate,
+                "Discharged",
+                selectedAppointment.Prescription
+            );
+
+
             if (doctorRepository.setPatientDischarged(appointmentDetailNo))
             {
                 List<Appointment> tmp = new List<Appointment>();
-                tmp.Add(selectedAppointment);
+                tmp.Add(ap);
                 PrintDoctorReceipt pr = new PrintDoctorReceipt(dr, tmp, "Discharged");
+                pr.print();
 
                 MessagePromp.MainShowMessage(this, "Succefully Discharged .", MessageBoxIcon.Information);
                 guna2Button4.Visible = false;

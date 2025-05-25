@@ -60,7 +60,7 @@ namespace ClinicSystem.DoctorClinic
             return name.Substring(0, 1).ToUpper() + name.Substring(1).ToLower();
         }
 
-        internal void print()
+        public void print()
         {
             printPreviewDialog.Document = printDocument;
             printPreviewDialog.WindowState = FormWindowState.Maximized;

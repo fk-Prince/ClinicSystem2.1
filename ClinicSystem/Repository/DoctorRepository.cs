@@ -62,6 +62,7 @@ namespace DoctorClinic
                     string query = @"
                               SELECT * FROM appointmentRecord_tbl
                                  LEFT JOIN patientappointment_tbl ON appointmentRecord_tbl.AppointmentRecordNo = patientappointment_tbl.AppointmentRecordNo
+                                 INNER JOIN discount_tbl ON discount_tbl.DiscountType = appointmentRecord_tbl.DiscountType
                                  LEFT JOIN patient_tbl ON patient_tbl.patientid = appointmentRecord_tbl.patientid
                                  LEFT JOIN doctor_tbl ON doctor_tbl.doctorId = patientappointment_tbl.doctorId
                                  LEFT JOIN operation_tbl ON operation_tbl.operationCode = patientappointment_tbl.OperationCode
@@ -133,11 +134,13 @@ namespace DoctorClinic
                     string query = @"
                          SELECT * FROM appointmentRecord_tbl
                          LEFT JOIN patientappointment_tbl ON appointmentRecord_tbl.AppointmentRecordNo = patientappointment_tbl.AppointmentRecordNo
+                         INNER JOIN discount_tbl ON discount_tbl.DiscountType = appointmentRecord_tbl.DiscountType
                          LEFT JOIN patient_tbl ON patient_tbl.patientid = appointmentRecord_tbl.patientid
                          LEFT JOIN doctor_tbl ON doctor_tbl.doctorId = patientappointment_tbl.doctorId
                          LEFT JOIN operation_tbl ON operation_tbl.operationCode = patientappointment_tbl.OperationCode
                          LEFT JOIN appointmentdetails_tbl ON appointmentdetails_tbl.AppointmentDetailNo = patientappointment_tbl.AppointmentDetailNo
-                         WHERE patientappointment_tbl.DoctorId = @DoctorID";
+                         WHERE patientappointment_tbl.DoctorId = @DoctorID
+                         ORDER BY patientappointment_tbl.appointmentdetailno ASC";
                     using (MySqlCommand command = new MySqlCommand(query, conn))
                     {
                         command.Parameters.AddWithValue("DoctorID", doctorID);
@@ -456,5 +459,28 @@ namespace DoctorClinic
                 MessageBox.Show("ERROR FROM insertSpecialized() DB " + ex.Message);
             }
         }
+
+        //internal void removeSpecialized(Doctor doc, Operation op)
+        //{
+        //    try
+        //    {
+        //        using (MySqlConnection conn = new MySqlConnection(DatabaseConnection.getConnection()))
+        //        {
+        //            conn.Open();
+        //            string query =
+        //                "DELETE FROM doctor_operation_mm_tbl WHERE doctorid = @doctorid AND operationcode = @operationcode";
+        //            using (MySqlCommand command = new MySqlCommand(query, conn))
+        //            {
+        //                command.Parameters.AddWithValue("@doctorid", doc.DoctorID);
+        //                command.Parameters.AddWithValue("@operationcode", op.OperationCode);
+        //                command.ExecuteNonQuery();
+        //            }
+        //        }
+        //    }
+        //    catch (MySqlException ex)
+        //    {
+        //        MessageBox.Show("ERROR FROM removeSpecialized() DB " + ex.Message);
+        //    }
+        //}
     }
 }

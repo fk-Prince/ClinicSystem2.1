@@ -27,6 +27,7 @@ namespace ClinicSystem.Appointments
                     string query = @"
                             SELECT * FROM appointmentRecord_tbl
                             LEFT JOIN patientappointment_tbl ON appointmentRecord_tbl.AppointmentRecordNo = patientappointment_tbl.AppointmentRecordNo
+                            INNER JOIN discount_tbl ON discount_tbl.DiscountType = appointmentRecord_tbl.DiscountType
                             LEFT JOIN patient_tbl ON patient_tbl.patientid = appointmentRecord_tbl.patientid
                             LEFT JOIN doctor_tbl ON doctor_tbl.doctorId = patientappointment_tbl.doctorId
                             LEFT JOIN operation_tbl ON operation_tbl.operationCode = patientappointment_tbl.OperationCode
@@ -166,10 +167,12 @@ namespace ClinicSystem.Appointments
                 string query = @"
                             SELECT * FROM appointmentRecord_tbl
                             LEFT JOIN patientappointment_tbl ON appointmentRecord_tbl.AppointmentRecordNo = patientappointment_tbl.AppointmentRecordNo
+                            INNER JOIN discount_tbl ON discount_tbl.DiscountType = appointmentRecord_tbl.DiscountType
                             LEFT JOIN patient_tbl ON patient_tbl.patientid = appointmentRecord_tbl.patientid
                             LEFT JOIN doctor_tbl ON doctor_tbl.doctorId = patientappointment_tbl.doctorId
                             LEFT JOIN operation_tbl ON operation_tbl.operationCode = patientappointment_tbl.OperationCode
-                            LEFT JOIN appointmentdetails_tbl ON appointmentdetails_tbl.AppointmentDetailNo = patientappointment_tbl.AppointmentDetailNo";
+                            LEFT JOIN appointmentdetails_tbl ON appointmentdetails_tbl.AppointmentDetailNo = patientappointment_tbl.AppointmentDetailNo
+                            ORDER BY patientappointment_tbl.appointmentdetailno ASC";
 
                     using (MySqlCommand command = new MySqlCommand(query, conn))
                     {
@@ -203,11 +206,13 @@ namespace ClinicSystem.Appointments
                     string query = @"
                                   SELECT * FROM appointmentRecord_tbl
                                   LEFT JOIN patientappointment_tbl ON appointmentRecord_tbl.AppointmentRecordNo = patientappointment_tbl.AppointmentRecordNo
+                                  INNER JOIN discount_tbl ON discount_tbl.DiscountType = appointmentRecord_tbl.DiscountType
                                   LEFT JOIN patient_tbl ON patient_tbl.patientid = appointmentRecord_tbl.patientid
                                   LEFT JOIN doctor_tbl ON doctor_tbl.doctorId = patientappointment_tbl.doctorId
                                   LEFT JOIN operation_tbl ON operation_tbl.operationCode = patientappointment_tbl.OperationCode
                                   LEFT JOIN appointmentdetails_tbl ON appointmentdetails_tbl.AppointmentDetailNo = patientappointment_tbl.AppointmentDetailNo
-                                  WHERE Status = 'Upcoming' OR Status = 'Reappointment' AND DATE(StartSchedule) < CURDATE() - INTERVAL 3 DAY";
+                                  WHERE (Status = 'Upcoming' OR Status = 'Reappointment') AND DATE(StartSchedule) > CURDATE() + INTERVAL 3 DAY
+                                  ORDER BY patientappointment_tbl.appointmentdetailno ASC";
 
                     using (MySqlCommand command = new MySqlCommand(query, conn))
                     {
@@ -414,6 +419,7 @@ namespace ClinicSystem.Appointments
         {
             try
             {
+
                 using (MySqlConnection conn = new MySqlConnection(DatabaseConnection.getConnection()))
                 {
                     conn.Open();
@@ -450,9 +456,9 @@ namespace ClinicSystem.Appointments
                             // Insert appointmentrecord_tbl
                             string query2 = @"
                                             INSERT INTO appointmentrecord_tbl 
-                                                (staffid, patientid, discounttype, Bookingdate, TotalWithDiscount) 
+                                                (staffid, patientid, discounttype, Bookingdate) 
                                             VALUES 
-                                                (@staffid, @patientid, @discounttype, @Bookingdate, @TotalWithDiscount); 
+                                                (@staffid, @patientid, @discounttype, @Bookingdate); 
                                             SELECT LAST_INSERT_ID();";
 
                             long appointmentRecordId;
@@ -460,9 +466,9 @@ namespace ClinicSystem.Appointments
                             {
                                 command.Parameters.AddWithValue("@staffid", staffId);
                                 command.Parameters.AddWithValue("@patientid", patient.Patientid);
-                                command.Parameters.AddWithValue("@discounttype", appList[0].Discounttype);
+                                command.Parameters.AddWithValue("@discounttype", appList[0].Discount.Discounttype);
                                 command.Parameters.AddWithValue("@Bookingdate", DateTime.Now);
-                                command.Parameters.AddWithValue("@TotalWithDiscount", appList.Sum(e => e.Total));
+                                //command.Parameters.AddWithValue("@TotalWithDiscount", appList.Sum(e => e.Total));
 
                                 appointmentRecordId = Convert.ToInt64(command.ExecuteScalar());
                             }
@@ -470,17 +476,17 @@ namespace ClinicSystem.Appointments
                             // Insert appointmentdetails_tbl
                             string query3 = @" 
                                                 INSERT INTO appointmentdetails_tbl 
-                                                    (AppointmentDetailNo, Subtotal) 
+                                                    (AppointmentDetailNo, Subtotal, TotalWithDiscount) 
                                                 VALUES 
-                                                    (@AppointmentDetailNo, @Subtotal)";
+                                                    (@AppointmentDetailNo, @Subtotal, @TotalWithDiscount)";
 
                             foreach (Appointment op in appList)
                             {
                                 using (MySqlCommand command = new MySqlCommand(query3, conn, transaction))
                                 {
                                     command.Parameters.AddWithValue("@AppointmentDetailNo", op.AppointmentDetailNo);
-                                    command.Parameters.AddWithValue("@Subtotal", op.SubTotal.ToString("F2"));
-
+                                    command.Parameters.AddWithValue("@Subtotal", op.SubTotal.ToString("F2")); 
+                                    command.Parameters.AddWithValue("@TotalWithDiscount", (op.SubTotal - (op.Discount.DiscountRate * op.SubTotal)).ToString("F2")); 
                                     command.ExecuteNonQuery();
                                 }
                             }
@@ -514,7 +520,7 @@ namespace ClinicSystem.Appointments
                         catch (Exception ex)
                         {
                             transaction.Rollback();
-                            MessageBox.Show("TRANSACTION ROLLED BACK: " + ex.Message);
+                            MessageBox.Show("TRANSACTION CANCELLED: " + ex.Message);
                             return false;
                         }
                     }
@@ -542,7 +548,7 @@ namespace ClinicSystem.Appointments
                     {
                         command.Parameters.AddWithValue("@staffid", staffId);
                         command.Parameters.AddWithValue("@patientid", patientid);
-                        command.Parameters.AddWithValue("@discounttype", appList[0].Discounttype);
+                        command.Parameters.AddWithValue("@discounttype", appList[0].Discount);
                         command.Parameters.AddWithValue("@Bookingdate", DateTime.Now);
                         command.Parameters.AddWithValue("@TotalWithDiscount", appList.Sum(e => e.Total));
                         insertedId = Convert.ToInt64(command.ExecuteScalar());
@@ -571,11 +577,13 @@ namespace ClinicSystem.Appointments
                     string query = @"
                          SELECT * FROM appointmentRecord_tbl
                          LEFT JOIN patientappointment_tbl ON appointmentRecord_tbl.AppointmentRecordNo = patientappointment_tbl.AppointmentRecordNo
+                         INNER JOIN discount_tbl ON discount_tbl.DiscountType = appointmentRecord_tbl.DiscountType
                          LEFT JOIN patient_tbl ON patient_tbl.patientid = appointmentRecord_tbl.patientid
                          LEFT JOIN doctor_tbl ON doctor_tbl.doctorId = patientappointment_tbl.doctorId
                          LEFT JOIN operation_tbl ON operation_tbl.operationCode = patientappointment_tbl.OperationCode
                          LEFT JOIN appointmentdetails_tbl ON appointmentdetails_tbl.AppointmentDetailNo = patientappointment_tbl.AppointmentDetailNo
-                         WHERE Status = 'Absent' AND EndSchedule BETWEEN CURRENT_DATE - INTERVAL 7 DAY AND NOW()";
+                         WHERE Status = 'Absent' AND EndSchedule BETWEEN CURRENT_DATE - INTERVAL 7 DAY AND NOW()
+                         ORDER BY patientappointment_tbl.appointmentdetailno ASC";
 
                     using (MySqlCommand command = new MySqlCommand(query, conn))
                     {

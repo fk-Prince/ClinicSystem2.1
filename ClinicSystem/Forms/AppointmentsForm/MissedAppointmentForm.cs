@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ClinicSystem.Appointments;
 using ClinicSystem.Entity;
+using ClinicSystem.Repository;
 using ClinicSystem.Rooms;
 using ClinicSystem.UserLoginForm;
 
@@ -18,12 +19,15 @@ namespace ClinicSystem.Forms.AppointmentsForm
     public partial class MissedAppointmentForm : Form
     {
         private AppointmentRepository appointmentRepository = new AppointmentRepository();
+        private DiscountRepository discountRepository = new DiscountRepository();
         private List<Appointment> missedAppointments;
         private Appointment selectedAppointment;
+        private List<Discount> discountList;
         public MissedAppointmentForm()
         {
             InitializeComponent();
             autoComplete();
+
             dateSchedulePicker.Value = DateTime.Now;
         }
 
@@ -126,8 +130,8 @@ namespace ClinicSystem.Forms.AppointmentsForm
             dateSchedulePicker.Value = selectedAppointment.StartTime;
             StartTime.SelectedItem = selectedAppointment.StartTime.ToString("hh:mm:ss tt");
             EndTime.Text = selectedAppointment.EndTime.ToString("hh:mm:ss tt");
-            total.Text = selectedAppointment.Total.ToString("F2");
-            totalFee.Text = (selectedAppointment.SubTotal * 0.15).ToString("F2");
+            total.Text = (selectedAppointmemnt.Total).ToString("F2");
+            totalFee.Text = (selectedAppointment.Total * 0.15).ToString("F2");
             StartTime.Enabled = true;
         }
 
@@ -242,7 +246,7 @@ namespace ClinicSystem.Forms.AppointmentsForm
                 selectedAppointment.RoomNo,
                 selectedAppointment.AppointmentDetailNo,
                 selectedAppointment.Total,
-                selectedAppointment.Discounttype,
+                selectedAppointment.Discount,
                 selectedAppointment.Diagnosis,
                 selectedAppointment.BookingDate,
                 selectedAppointment.Status,

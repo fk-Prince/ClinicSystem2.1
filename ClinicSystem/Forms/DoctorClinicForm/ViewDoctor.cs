@@ -30,14 +30,14 @@ namespace ClinicSystem.Doctors
             if (doctorList.Count == 0)
             {
                 type = "Currently We Have No Doctors";
-           
+
                 SearchBar.Enabled = false;
                 all.Enabled = false;
                 active.Enabled = false;
                 inactive.Enabled = false;
             }
             displayDoctors(doctorList, type);
-          
+
 
         }
         public string Capitalize(string name)
@@ -72,53 +72,53 @@ namespace ClinicSystem.Doctors
                 foreach (Doctor doctor in doctorList)
                 {
 
-                        Guna2Panel panel = new Guna2Panel();
-                        panel.Size = new Size(300, 230);
-                        panel.Location = new Point(50, 100);
-                        panel.Margin = new Padding(20, 10, 10, 10);
-                        panel.FillColor = Color.FromArgb(111, 168, 166);
-                        panel.BackColor = Color.Transparent;
-                        panel.BorderRadius = 30;
-                        //panel.Region = Region.FromHrgn(dll.CreateRoundRectRgn(0, 0, panel.Width, panel.Height, 50, 50));
+                    Guna2Panel panel = new Guna2Panel();
+                    panel.Size = new Size(300, 230);
+                    panel.Location = new Point(50, 100);
+                    panel.Margin = new Padding(20, 10, 10, 10);
+                    panel.FillColor = Color.FromArgb(111, 168, 166);
+                    panel.BackColor = Color.Transparent;
+                    panel.BorderRadius = 30;
+                    //panel.Region = Region.FromHrgn(dll.CreateRoundRectRgn(0, 0, panel.Width, panel.Height, 50, 50));
 
-                        PictureBox picture = new PictureBox();
-                        picture.Image = (doctor.Image == null) ? Properties.Resources.doctoruser : doctor.Image;
-                        picture.Location = new Point(15, 10);
-                        picture.Size = new Size(64, 64);
-                        picture.SizeMode = PictureBoxSizeMode.Zoom;
-                        picture.BackColor = Color.FromArgb(111, 168, 166);
-                        panel.Controls.Add(picture);
+                    PictureBox picture = new PictureBox();
+                    picture.Image = (doctor.Image == null) ? Properties.Resources.doctoruser : doctor.Image;
+                    picture.Location = new Point(15, 10);
+                    picture.Size = new Size(64, 64);
+                    picture.SizeMode = PictureBoxSizeMode.Zoom;
+                    picture.BackColor = Color.FromArgb(111, 168, 166);
+                    panel.Controls.Add(picture);
 
 
-                        Label label = createLabel("Doctor ID", doctor.DoctorID.ToString(), 10, 80);
-                        panel.Controls.Add(label);
+                    Label label = createLabel("Doctor ID", doctor.DoctorID.ToString(), 10, 80);
+                    panel.Controls.Add(label);
 
-                        string fullname = Capitalize(doctor.DoctorFirstName) + "  " + Capitalize(doctor.DoctorMiddleName) + "  " + Capitalize(doctor.DoctorLastName);
-                        label = createLabel("Doctor Name", fullname, 10, 100);
-                        panel.Controls.Add(label);
+                    string fullname = Capitalize(doctor.DoctorFirstName) + "  " + Capitalize(doctor.DoctorMiddleName) + "  " + Capitalize(doctor.DoctorLastName);
+                    label = createLabel("Doctor Name", fullname, 10, 100);
+                    panel.Controls.Add(label);
 
-                        label = createLabel(
-                            "Age",
-                            doctor.DoctorAge.ToString(),
-                            10,
-                            120
-                        );
-                        panel.Controls.Add(label);
+                    label = createLabel(
+                        "Age",
+                        doctor.DoctorAge.ToString(),
+                        10,
+                        120
+                    );
+                    panel.Controls.Add(label);
 
-                        label = createLabel("Gender", doctor.Gender, 10, 140);
-                        panel.Controls.Add(label);
+                    label = createLabel("Gender", doctor.Gender, 10, 140);
+                    panel.Controls.Add(label);
 
-                        label = createLabel("Date-Hired", doctor.DateHired.ToString("yyyy-MM-dd"), 10, 160);
-                        panel.Controls.Add(label);
+                    label = createLabel("Date-Hired", doctor.DateHired.ToString("yyyy-MM-dd"), 10, 160);
+                    panel.Controls.Add(label);
 
-                        label = createLabel("Address", doctor.DoctorAddress, 10, 180);
-                        panel.Controls.Add(label);
+                    label = createLabel("Address", doctor.DoctorAddress, 10, 180);
+                    panel.Controls.Add(label);
 
-                        label = createLabel("In Service", doctor.DoctorActive ? "Active" : "Inactive", 10, 200);
-                        panel.Controls.Add(label);
+                    label = createLabel("In Service", doctor.DoctorActive ? "Active" : "Inactive", 10, 200);
+                    panel.Controls.Add(label);
 
                     flowPanel.Controls.Add(panel);
-                    
+
                 }
             }
 
@@ -146,7 +146,7 @@ namespace ClinicSystem.Doctors
             timer1.Start();
         }
 
-   
+
         private void all_CheckedChanged(object sender, EventArgs e)
         {
             searchDOctor();
@@ -180,13 +180,13 @@ namespace ClinicSystem.Doctors
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (a.Visible)
-            { 
+            {
                 displayDoctorOperation(SearchBar.Text);
                 return;
             }
-           
 
-            List<Doctor> filteredDoctor = new List<Doctor>(); 
+
+            List<Doctor> filteredDoctor = new List<Doctor>();
             timer1.Stop();
             if (string.IsNullOrWhiteSpace(SearchBar.Text))
             {
@@ -235,9 +235,13 @@ namespace ClinicSystem.Doctors
                 {
                     filter = docOp.Where(d => !d.Key.DoctorActive).ToDictionary(x => x.Key, x => x.Value);
                 }
+                else
+                {
+                    filter = docOp;
+                }
                 displayGrid(filter);
             }
-            else 
+            else
             {
                 displayDoctorOperation(SearchBar.Text.Trim());
             }
@@ -252,7 +256,7 @@ namespace ClinicSystem.Doctors
             {
                 Doctor doctor = pair.Key;
                 Operation operation = pair.Value;
-                table.Rows.Add(doctor.DoctorID,  "Dr. " + doctor.DoctorFirstName + " " + doctor.DoctorMiddleName + " " + doctor.DoctorLastName, operation.OperationCode, operation.OperationName);
+                table.Rows.Add(doctor.DoctorID, "Dr. " + doctor.DoctorFirstName + " " + doctor.DoctorMiddleName + " " + doctor.DoctorLastName, operation.OperationCode, operation.OperationName);
             }
         }
 
@@ -271,23 +275,23 @@ namespace ClinicSystem.Doctors
                           x.Key.DoctorLastName.StartsWith(doctorid.Trim(), StringComparison.OrdinalIgnoreCase) ||
                           x.Key.DoctorID.ToString().StartsWith(doctorid.Trim(), StringComparison.OrdinalIgnoreCase) ||
                           x.Key.DoctorID.ToString().EndsWith(doctorid.Trim(), StringComparison.OrdinalIgnoreCase)
-                      ).ToDictionary(x => x.Key, x=> x.Value);
+                      ).ToDictionary(x => x.Key, x => x.Value);
 
             }
-  
+
             if (active.Checked)
             {
                 filter = filter.Where(d => d.Key.DoctorActive).ToDictionary(x => x.Key, x => x.Value);
-            
+
             }
             else if (inactive.Checked)
             {
                 filter = filter.Where(d => !d.Key.DoctorActive).ToDictionary(x => x.Key, x => x.Value);
             }
 
-            
+
             displayGrid(filter);
-           
+
         }
 
         private void ViewDoctor_Load(object sender, EventArgs e)
@@ -304,7 +308,15 @@ namespace ClinicSystem.Doctors
             table.Columns.Add("Operation Name", typeof(string));
             dataGrid.DataSource = table;
 
- 
+
+            //DataGridViewLinkColumn linkCol = new DataGridViewLinkColumn();
+            //linkCol.HeaderText = "Remove Specialized";
+            //linkCol.Text = "Remove";
+            //linkCol.Name = "Remove";
+            //linkCol.UseColumnTextForLinkValue = true;
+            //linkCol.LinkColor = Color.Red; 
+            //dataGrid.Columns.Add(linkCol);
+
         }
 
         private void dropdown_Tick(object sender, EventArgs e)
@@ -315,7 +327,7 @@ namespace ClinicSystem.Doctors
                 if (y >= 0)
                 {
                     dropdown.Stop();
-                    a.Visible = true;                 
+                    a.Visible = true;
                     isViewOperation = !isViewOperation;
                     y = 0;
                 }
@@ -341,6 +353,42 @@ namespace ClinicSystem.Doctors
             a.Location = new Point((ClientSize.Width - a.Size.Width) / 2, -a.Size.Height);
             y = -a.Size.Height;
             a.BringToFront();
+        }
+
+        private void dataGrid_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            //if (dataGrid.Columns[e.ColumnIndex].Name == "Remove" && e.RowIndex >= 0)
+            //{
+            //    DataGridViewLinkCell cell = dataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex] as DataGridViewLinkCell;
+            //    if (cell != null)
+            //    {
+            //        cell.LinkColor = Color.Red;
+            //        cell.ActiveLinkColor = Color.DarkRed;
+            //        cell.VisitedLinkColor = Color.Red; 
+            //    }
+            //}
+        }
+
+        private void dataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //if (e.RowIndex >= 0 && dataGrid.Columns[e.ColumnIndex].Name == "Remove")
+            //{
+            //    DataGridViewRow row = dataGrid.Rows[e.RowIndex];
+
+            //    if (row.Cells["Doctor ID"]?.Value != null)
+            //    {
+            //        string doctorid = row.Cells["Doctor ID"].Value.ToString();
+            //        var docPair = docOp.FirstOrDefault(d => d.Key.DoctorID.ToString().Equals(doctorid));
+            //        Doctor doc = docPair.Key;
+            //        Operation op = docPair.Value;
+            //        doctorRepository.removeSpecialized(doc,op);
+            //        dataGrid.Rows.RemoveAt(e.RowIndex);
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("Patient ID is missing for this row.");
+            //    }
+            //}
         }
     }
 }
