@@ -293,61 +293,61 @@ namespace ClinicSystem
 
         private void guna2TextBox2_TextChanged(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(tb.Text.Trim()))
-            {
-                reset2();
-                return;
-            }
+            //if (string.IsNullOrWhiteSpace(tb.Text.Trim()))
+            //{
+            //    reset2();
+            //    return;
+            //}
                
-            string t = tb.Text.Trim();
-            bool f = false;
-            if (int.TryParse(t, out int appNo))
-            {
-                foreach (Appointment appointment in filter)
-                {
-                    if (appointment.AppointmentDetailNo.ToString() == appNo.ToString())
-                    {
-                        comboAppNo.SelectedItem = appointment.AppointmentDetailNo;
-                        string dr = $"{appointment.Doctor.DoctorID}  | {appointment.Doctor.DoctorLastName}, {appointment.Doctor.DoctorFirstName}  {appointment.Doctor.DoctorMiddleName}";
-                        tbDoctor.Text = dr;
-                        tbOperation.Text = appointment.Operation.OperationCode + "  |  " + appointment.Operation.OperationName;
-                        tbDoctorDiagnosis.Text = appointment.Diagnosis;
-                        prescription.Text = appointment.Prescription;
-                        cost.Text = "₱ " + appointment.Total.ToString("N2");
-                        start.Text = appointment.StartTime.ToString("yyyy-MM-dd hh:mm:ss tt");
-                        end.Text = appointment.EndTime.ToString("yyyy-MM-dd hh:mm:ss tt");
-                        Status.Text = appointment.Status;
-                        f = true;
-                        break;
-                    }
-                }
-            } else
-            {
-                foreach (Appointment appointment in filter)
-                {
-                    if (appointment.Operation.OperationName.StartsWith(t,StringComparison.OrdinalIgnoreCase) ||
-                        appointment.Doctor.DoctorLastName.StartsWith(t, StringComparison.OrdinalIgnoreCase))
-                    {
-                        comboAppNo.SelectedItem = appointment.AppointmentDetailNo;
-                        string dr = $"{appointment.Doctor.DoctorID}  | {appointment.Doctor.DoctorLastName}, {appointment.Doctor.DoctorFirstName}  {appointment.Doctor.DoctorMiddleName}";
-                        tbDoctor.Text = dr;
-                        tbOperation.Text = appointment.Operation.OperationCode + "  |  " + appointment.Operation.OperationName;
-                        tbDoctorDiagnosis.Text = appointment.Diagnosis;
-                        prescription.Text = appointment.Prescription;
-                        cost.Text = "₱ " + appointment.Total.ToString("N2");
-                        start.Text = appointment.StartTime.ToString("yyyy-MM-dd hh:mm:ss tt");
-                        end.Text = appointment.EndTime.ToString("yyyy-MM-dd hh:mm:ss tt");
-                        Status.Text = appointment.Status;
-                        f = true;
-                        break;
-                    }
-                }
-            }
+            //string t = tb.Text.Trim();
+            //bool f = false;
+            //if (int.TryParse(t, out int appNo))
+            //{
+            //    foreach (Appointment appointment in filter)
+            //    {
+            //        if (appointment.AppointmentDetailNo.ToString() == appNo.ToString())
+            //        {
+            //            comboAppNo.SelectedItem = appointment.AppointmentDetailNo;
+            //            string dr = $"{appointment.Doctor.DoctorID}  | {appointment.Doctor.DoctorLastName}, {appointment.Doctor.DoctorFirstName}  {appointment.Doctor.DoctorMiddleName}";
+            //            tbDoctor.Text = dr;
+            //            tbOperation.Text = appointment.Operation.OperationCode + "  |  " + appointment.Operation.OperationName;
+            //            tbDoctorDiagnosis.Text = appointment.Diagnosis;
+            //            prescription.Text = appointment.Prescription;
+            //            cost.Text = "₱ " + appointment.Total.ToString("N2");
+            //            start.Text = appointment.StartTime.ToString("yyyy-MM-dd hh:mm:ss tt");
+            //            end.Text = appointment.EndTime.ToString("yyyy-MM-dd hh:mm:ss tt");
+            //            Status.Text = appointment.Status;
+            //            f = true;
+            //            break;
+            //        }
+            //    }
+            //} else
+            //{
+            //    foreach (Appointment appointment in filter)
+            //    {
+            //        if (appointment.Operation.OperationName.StartsWith(t,StringComparison.OrdinalIgnoreCase) ||
+            //            appointment.Doctor.DoctorLastName.StartsWith(t, StringComparison.OrdinalIgnoreCase))
+            //        {
+            //            comboAppNo.SelectedItem = appointment.AppointmentDetailNo;
+            //            string dr = $"{appointment.Doctor.DoctorID}  | {appointment.Doctor.DoctorLastName}, {appointment.Doctor.DoctorFirstName}  {appointment.Doctor.DoctorMiddleName}";
+            //            tbDoctor.Text = dr;
+            //            tbOperation.Text = appointment.Operation.OperationCode + "  |  " + appointment.Operation.OperationName;
+            //            tbDoctorDiagnosis.Text = appointment.Diagnosis;
+            //            prescription.Text = appointment.Prescription;
+            //            cost.Text = "₱ " + appointment.Total.ToString("N2");
+            //            start.Text = appointment.StartTime.ToString("yyyy-MM-dd hh:mm:ss tt");
+            //            end.Text = appointment.EndTime.ToString("yyyy-MM-dd hh:mm:ss tt");
+            //            Status.Text = appointment.Status;
+            //            f = true;
+            //            break;
+            //        }
+            //    }
+            //}
 
-            if (!f)
-            {
-                reset2();
-            }
+            //if (!f)
+            //{
+            //    reset2();
+            //}
 
             //int appointmentDetailNo = int.Parse(comboAppNo.SelectedItem.ToString());
             //foreach (Appointment appointment in filter)
@@ -370,8 +370,8 @@ namespace ClinicSystem
 
         private void guna2PictureBox2_Click(object sender, EventArgs e)
         {
-            tb.Text = "";
-            reset2();
+            //tb.Text = "";
+            //reset2();
         }
     }
 }

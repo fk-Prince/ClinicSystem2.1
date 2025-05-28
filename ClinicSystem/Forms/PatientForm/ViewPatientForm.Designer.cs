@@ -40,9 +40,6 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.dataGrid = new Guna.UI2.WinForms.Guna2DataGridView();
             this.tabPatientDetails = new System.Windows.Forms.TabPage();
-            this.panel18 = new System.Windows.Forms.Panel();
-            this.guna2PictureBox2 = new Guna.UI2.WinForms.Guna2PictureBox();
-            this.tb = new Guna.UI2.WinForms.Guna2TextBox();
             this.panel17 = new System.Windows.Forms.Panel();
             this.Status = new Guna.UI2.WinForms.Guna2TextBox();
             this.label17 = new System.Windows.Forms.Label();
@@ -99,8 +96,6 @@
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             this.tabPatientDetails.SuspendLayout();
-            this.panel18.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox2)).BeginInit();
             this.panel17.SuspendLayout();
             this.panel16.SuspendLayout();
             this.panel12.SuspendLayout();
@@ -292,7 +287,6 @@
             // 
             this.tabPatientDetails.AccessibleName = "";
             this.tabPatientDetails.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(249)))), ((int)(((byte)(246)))));
-            this.tabPatientDetails.Controls.Add(this.panel18);
             this.tabPatientDetails.Controls.Add(this.panel17);
             this.tabPatientDetails.Controls.Add(this.panel16);
             this.tabPatientDetails.Controls.Add(this.panel12);
@@ -314,51 +308,6 @@
             this.tabPatientDetails.Size = new System.Drawing.Size(1072, 506);
             this.tabPatientDetails.TabIndex = 1;
             this.tabPatientDetails.Text = "Patient Details";
-            // 
-            // panel18
-            // 
-            this.panel18.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.panel18.Controls.Add(this.guna2PictureBox2);
-            this.panel18.Controls.Add(this.tb);
-            this.panel18.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel18.ForeColor = System.Drawing.Color.Black;
-            this.panel18.Location = new System.Drawing.Point(490, 47);
-            this.panel18.Name = "panel18";
-            this.panel18.Size = new System.Drawing.Size(571, 60);
-            this.panel18.TabIndex = 41;
-            // 
-            // guna2PictureBox2
-            // 
-            this.guna2PictureBox2.FillColor = System.Drawing.Color.Transparent;
-            this.guna2PictureBox2.Image = global::ClinicSystem.Properties.Resources.recycling_26px;
-            this.guna2PictureBox2.ImageRotate = 0F;
-            this.guna2PictureBox2.Location = new System.Drawing.Point(547, 30);
-            this.guna2PictureBox2.Name = "guna2PictureBox2";
-            this.guna2PictureBox2.Size = new System.Drawing.Size(21, 20);
-            this.guna2PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.guna2PictureBox2.TabIndex = 48;
-            this.guna2PictureBox2.TabStop = false;
-            this.guna2PictureBox2.Click += new System.EventHandler(this.guna2PictureBox2_Click);
-            // 
-            // tb
-            // 
-            this.tb.BorderRadius = 5;
-            this.tb.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.tb.DefaultText = "";
-            this.tb.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.tb.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.tb.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.tb.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.tb.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.tb.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.tb.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.tb.Location = new System.Drawing.Point(261, 27);
-            this.tb.Name = "tb";
-            this.tb.PlaceholderText = "Search...";
-            this.tb.SelectedText = "";
-            this.tb.Size = new System.Drawing.Size(280, 27);
-            this.tb.TabIndex = 1;
-            this.tb.TextChanged += new System.EventHandler(this.guna2TextBox2_TextChanged);
             // 
             // panel17
             // 
@@ -707,7 +656,7 @@
             this.prescription.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(44)))), ((int)(((byte)(54)))));
             this.prescription.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.prescription.Location = new System.Drawing.Point(285, 21);
-            this.prescription.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.prescription.Margin = new System.Windows.Forms.Padding(4);
             this.prescription.Multiline = true;
             this.prescription.Name = "prescription";
             this.prescription.PlaceholderText = "";
@@ -741,7 +690,7 @@
             this.tbDoctorDiagnosis.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(44)))), ((int)(((byte)(54)))));
             this.tbDoctorDiagnosis.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.tbDoctorDiagnosis.Location = new System.Drawing.Point(5, 22);
-            this.tbDoctorDiagnosis.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbDoctorDiagnosis.Margin = new System.Windows.Forms.Padding(4);
             this.tbDoctorDiagnosis.Multiline = true;
             this.tbDoctorDiagnosis.Name = "tbDoctorDiagnosis";
             this.tbDoctorDiagnosis.PlaceholderText = "";
@@ -1145,8 +1094,6 @@
             this.tabPage3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();
             this.tabPatientDetails.ResumeLayout(false);
-            this.panel18.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox2)).EndInit();
             this.panel17.ResumeLayout(false);
             this.panel17.PerformLayout();
             this.panel16.ResumeLayout(false);
@@ -1241,8 +1188,5 @@
         private System.Windows.Forms.Label label17;
         private Guna.UI2.WinForms.Guna2TextBox prescription;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Panel panel18;
-        private Guna.UI2.WinForms.Guna2TextBox tb;
-        private Guna.UI2.WinForms.Guna2PictureBox guna2PictureBox2;
     }
 }
