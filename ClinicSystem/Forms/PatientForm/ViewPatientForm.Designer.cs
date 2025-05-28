@@ -32,8 +32,11 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.SearchBar1 = new Guna.UI2.WinForms.Guna2TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel15 = new System.Windows.Forms.Panel();
             this.s = new Guna.UI2.WinForms.Guna2TabControl();
@@ -51,7 +54,6 @@
             this.label13 = new System.Windows.Forms.Label();
             this.start = new Guna.UI2.WinForms.Guna2TextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.guna2PictureBox1 = new Guna.UI2.WinForms.Guna2PictureBox();
             this.panel11 = new System.Windows.Forms.Panel();
             this.tbContactNumber = new Guna.UI2.WinForms.Guna2TextBox();
             this.label11 = new System.Windows.Forms.Label();
@@ -90,6 +92,11 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.tbPatId = new Guna.UI2.WinForms.Guna2TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.guna2PictureBox2 = new Guna.UI2.WinForms.Guna2PictureBox();
+            this.guna2PictureBox1 = new Guna.UI2.WinForms.Guna2PictureBox();
+            this.SearchBar1 = new Guna.UI2.WinForms.Guna2TextBox();
+            this.a = new Guna.UI2.WinForms.Guna2Panel();
+            this.d1 = new Guna.UI2.WinForms.Guna2DataGridView();
             this.panel1.SuspendLayout();
             this.panel15.SuspendLayout();
             this.s.SuspendLayout();
@@ -99,7 +106,6 @@
             this.panel17.SuspendLayout();
             this.panel16.SuspendLayout();
             this.panel12.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).BeginInit();
             this.panel11.SuspendLayout();
             this.panel10.SuspendLayout();
             this.panel14.SuspendLayout();
@@ -112,6 +118,10 @@
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).BeginInit();
+            this.a.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.d1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -123,29 +133,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(344, 64);
             this.panel1.TabIndex = 5;
-            // 
-            // SearchBar1
-            // 
-            this.SearchBar1.BorderRadius = 5;
-            this.SearchBar1.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.SearchBar1.DefaultText = "";
-            this.SearchBar1.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.SearchBar1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.SearchBar1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.SearchBar1.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.SearchBar1.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.SearchBar1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SearchBar1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.SearchBar1.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.SearchBar1.IconRight = global::ClinicSystem.Properties.Resources.search24;
-            this.SearchBar1.Location = new System.Drawing.Point(13, 23);
-            this.SearchBar1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.SearchBar1.Name = "SearchBar1";
-            this.SearchBar1.PlaceholderText = "";
-            this.SearchBar1.SelectedText = "";
-            this.SearchBar1.Size = new System.Drawing.Size(323, 37);
-            this.SearchBar1.TabIndex = 12;
-            this.SearchBar1.TextChanged += new System.EventHandler(this.SearchBar1_TextChanged);
             // 
             // label1
             // 
@@ -287,6 +274,7 @@
             // 
             this.tabPatientDetails.AccessibleName = "";
             this.tabPatientDetails.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(249)))), ((int)(((byte)(246)))));
+            this.tabPatientDetails.Controls.Add(this.a);
             this.tabPatientDetails.Controls.Add(this.panel17);
             this.tabPatientDetails.Controls.Add(this.panel16);
             this.tabPatientDetails.Controls.Add(this.panel12);
@@ -486,17 +474,6 @@
             this.label12.TabIndex = 0;
             this.label12.Text = "Start Appt.";
             // 
-            // guna2PictureBox1
-            // 
-            this.guna2PictureBox1.Image = global::ClinicSystem.Properties.Resources.next;
-            this.guna2PictureBox1.ImageRotate = 0F;
-            this.guna2PictureBox1.Location = new System.Drawing.Point(281, 9);
-            this.guna2PictureBox1.Name = "guna2PictureBox1";
-            this.guna2PictureBox1.Size = new System.Drawing.Size(23, 19);
-            this.guna2PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.guna2PictureBox1.TabIndex = 6;
-            this.guna2PictureBox1.TabStop = false;
-            // 
             // panel11
             // 
             this.panel11.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -545,6 +522,7 @@
             // panel10
             // 
             this.panel10.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.panel10.Controls.Add(this.guna2PictureBox2);
             this.panel10.Controls.Add(this.comboAppNo);
             this.panel10.Controls.Add(this.label2);
             this.panel10.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -561,7 +539,7 @@
             this.comboAppNo.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboAppNo.FormattingEnabled = true;
             this.comboAppNo.IntegralHeight = false;
-            this.comboAppNo.Location = new System.Drawing.Point(335, 3);
+            this.comboAppNo.Location = new System.Drawing.Point(306, 3);
             this.comboAppNo.Name = "comboAppNo";
             this.comboAppNo.Size = new System.Drawing.Size(229, 29);
             this.comboAppNo.TabIndex = 0;
@@ -1074,6 +1052,134 @@
             this.label3.Text = "Patient ID";
             this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
+            // guna2PictureBox2
+            // 
+            this.guna2PictureBox2.FillColor = System.Drawing.Color.Transparent;
+            this.guna2PictureBox2.Image = global::ClinicSystem.Properties.Resources.list;
+            this.guna2PictureBox2.ImageRotate = 0F;
+            this.guna2PictureBox2.Location = new System.Drawing.Point(541, 2);
+            this.guna2PictureBox2.Name = "guna2PictureBox2";
+            this.guna2PictureBox2.Size = new System.Drawing.Size(27, 30);
+            this.guna2PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.guna2PictureBox2.TabIndex = 48;
+            this.guna2PictureBox2.TabStop = false;
+            this.guna2PictureBox2.Click += new System.EventHandler(this.guna2PictureBox2_Click_1);
+            // 
+            // guna2PictureBox1
+            // 
+            this.guna2PictureBox1.Image = global::ClinicSystem.Properties.Resources.next;
+            this.guna2PictureBox1.ImageRotate = 0F;
+            this.guna2PictureBox1.Location = new System.Drawing.Point(281, 9);
+            this.guna2PictureBox1.Name = "guna2PictureBox1";
+            this.guna2PictureBox1.Size = new System.Drawing.Size(23, 19);
+            this.guna2PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.guna2PictureBox1.TabIndex = 6;
+            this.guna2PictureBox1.TabStop = false;
+            // 
+            // SearchBar1
+            // 
+            this.SearchBar1.BorderRadius = 5;
+            this.SearchBar1.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.SearchBar1.DefaultText = "";
+            this.SearchBar1.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.SearchBar1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.SearchBar1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.SearchBar1.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.SearchBar1.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.SearchBar1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SearchBar1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.SearchBar1.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.SearchBar1.IconRight = global::ClinicSystem.Properties.Resources.search24;
+            this.SearchBar1.Location = new System.Drawing.Point(13, 23);
+            this.SearchBar1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.SearchBar1.Name = "SearchBar1";
+            this.SearchBar1.PlaceholderText = "";
+            this.SearchBar1.SelectedText = "";
+            this.SearchBar1.Size = new System.Drawing.Size(323, 37);
+            this.SearchBar1.TabIndex = 12;
+            this.SearchBar1.TextChanged += new System.EventHandler(this.SearchBar1_TextChanged);
+            // 
+            // a
+            // 
+            this.a.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.a.Controls.Add(this.d1);
+            this.a.Location = new System.Drawing.Point(610, 148);
+            this.a.Name = "a";
+            this.a.Size = new System.Drawing.Size(451, 348);
+            this.a.TabIndex = 48;
+            this.a.Visible = false;
+            // 
+            // d1
+            // 
+            this.d1.AllowUserToAddRows = false;
+            this.d1.AllowUserToDeleteRows = false;
+            this.d1.AllowUserToResizeColumns = false;
+            this.d1.AllowUserToResizeRows = false;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.LightGray;
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.LightGray;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.d1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            this.d1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(88)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.d1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            this.d1.ColumnHeadersHeight = 50;
+            this.d1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.d1.DefaultCellStyle = dataGridViewCellStyle7;
+            this.d1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.d1.GridColor = System.Drawing.Color.White;
+            this.d1.Location = new System.Drawing.Point(0, 0);
+            this.d1.Name = "d1";
+            this.d1.ReadOnly = true;
+            this.d1.RowHeadersVisible = false;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.d1.RowsDefaultCellStyle = dataGridViewCellStyle8;
+            this.d1.RowTemplate.Height = 40;
+            this.d1.Size = new System.Drawing.Size(451, 348);
+            this.d1.TabIndex = 0;
+            this.d1.ThemeStyle.AlternatingRowsStyle.BackColor = System.Drawing.Color.White;
+            this.d1.ThemeStyle.AlternatingRowsStyle.Font = null;
+            this.d1.ThemeStyle.AlternatingRowsStyle.ForeColor = System.Drawing.Color.Empty;
+            this.d1.ThemeStyle.AlternatingRowsStyle.SelectionBackColor = System.Drawing.Color.Empty;
+            this.d1.ThemeStyle.AlternatingRowsStyle.SelectionForeColor = System.Drawing.Color.Empty;
+            this.d1.ThemeStyle.BackColor = System.Drawing.Color.White;
+            this.d1.ThemeStyle.GridColor = System.Drawing.Color.White;
+            this.d1.ThemeStyle.HeaderStyle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(88)))), ((int)(((byte)(255)))));
+            this.d1.ThemeStyle.HeaderStyle.BorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.d1.ThemeStyle.HeaderStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.d1.ThemeStyle.HeaderStyle.ForeColor = System.Drawing.Color.White;
+            this.d1.ThemeStyle.HeaderStyle.HeaightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
+            this.d1.ThemeStyle.HeaderStyle.Height = 50;
+            this.d1.ThemeStyle.ReadOnly = true;
+            this.d1.ThemeStyle.RowsStyle.BackColor = System.Drawing.Color.White;
+            this.d1.ThemeStyle.RowsStyle.BorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
+            this.d1.ThemeStyle.RowsStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.d1.ThemeStyle.RowsStyle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
+            this.d1.ThemeStyle.RowsStyle.Height = 40;
+            this.d1.ThemeStyle.RowsStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
+            this.d1.ThemeStyle.RowsStyle.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
+            this.d1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.d1_MouseClick);
+            // 
             // ViewPatientForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1100,7 +1206,6 @@
             this.panel16.PerformLayout();
             this.panel12.ResumeLayout(false);
             this.panel12.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).EndInit();
             this.panel11.ResumeLayout(false);
             this.panel11.PerformLayout();
             this.panel10.ResumeLayout(false);
@@ -1125,6 +1230,10 @@
             this.panel3.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).EndInit();
+            this.a.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.d1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1188,5 +1297,8 @@
         private System.Windows.Forms.Label label17;
         private Guna.UI2.WinForms.Guna2TextBox prescription;
         private System.Windows.Forms.Label label18;
+        private Guna.UI2.WinForms.Guna2PictureBox guna2PictureBox2;
+        private Guna.UI2.WinForms.Guna2Panel a;
+        private Guna.UI2.WinForms.Guna2DataGridView d1;
     }
 }
