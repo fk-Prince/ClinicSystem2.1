@@ -9,12 +9,13 @@ using ClinicSystem.PatientForm;
 using ClinicSystem.Appointments;
 using System.Linq;
 using ClinicSystem.DoctorClinic;
+using System.Web.UI.WebControls;
 
 namespace ClinicSystem
 {
     public partial class ViewPatientForm : Form
     {
-        private DataTable dt;
+        private DataTable dt, dt1;
         private List<Appointment> appointmentList;
 
         private AppointmentRepository db = new AppointmentRepository();
@@ -22,6 +23,8 @@ namespace ClinicSystem
 
         private HashSet<int> disabledTabs = new HashSet<int>() { 1 };
         private bool isSecondTab = false;
+
+
         public ViewPatientForm(Staff staff)
         {
             InitializeComponent();
@@ -34,17 +37,16 @@ namespace ClinicSystem
             dt.Columns.Add("Gender", typeof(string));
             dt.Columns.Add("Contact Number", typeof(string));
 
-
             dataGrid.AutoGenerateColumns = true;
             dataGrid.DataSource = dt;
 
+
+        
+
             appointmentList = db.getAppointment();
             displayTable(appointmentList);
+
           
-            dataGrid.AlternatingRowsDefaultCellStyle.BackColor = Color.LightGray;
-            dataGrid.RowsDefaultCellStyle.BackColor = Color.White;
-            dataGrid.RowsDefaultCellStyle.SelectionBackColor = dataGrid.RowsDefaultCellStyle.BackColor;
-            dataGrid.AlternatingRowsDefaultCellStyle.SelectionBackColor = dataGrid.AlternatingRowsDefaultCellStyle.BackColor;
 
         }
 
@@ -78,12 +80,19 @@ namespace ClinicSystem
         private void ViewPatientForm_Load(object sender, EventArgs e)
         {
 
+
+
             SearchBar1.Focus();
             dataGrid.EnableHeadersVisualStyles = false;
             dataGrid.ColumnHeadersDefaultCellStyle.BackColor = ColorTranslator.FromHtml("#5CA8A3");
             dataGrid.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
             dataGrid.ColumnHeadersDefaultCellStyle.SelectionBackColor = ColorTranslator.FromHtml("#5CA8A3");
             dataGrid.ColumnHeadersDefaultCellStyle.SelectionForeColor = Color.White;
+
+              dataGrid.AlternatingRowsDefaultCellStyle.BackColor = Color.LightGray;
+            dataGrid.RowsDefaultCellStyle.BackColor = Color.White;
+            dataGrid.RowsDefaultCellStyle.SelectionBackColor = dataGrid.RowsDefaultCellStyle.BackColor;
+            dataGrid.AlternatingRowsDefaultCellStyle.SelectionBackColor = dataGrid.AlternatingRowsDefaultCellStyle.BackColor;
         }
 
         private void SearchBar1_TextChanged(object sender, EventArgs e)
@@ -128,7 +137,7 @@ namespace ClinicSystem
                     tbAddress.Text = selected.Patient.Address;
                     datepickBirthDay.Value = selected.Patient.Birthdate;
                     tbContactNumber.Text = selected.Patient.ContactNumber;
-                    guna2TextBox1.Text = selected.Prescription;
+                    prescription.Text = selected.Prescription;
                     filter.Clear();
                     foreach (Appointment pas in appointmentList)
                     {
@@ -138,16 +147,20 @@ namespace ClinicSystem
                         }
                     }
 
+                  
                     if (filter != null && filter.Count > 0)
                     {
-                       
-                        foreach (Appointment f in filter)
+
+                        foreach (Appointment appointment in filter)
                         {
-                            comboAppNo.Items.Add(f.AppointmentDetailNo);                      
+                            comboAppNo.Items.Add(appointment.AppointmentDetailNo);
                         }
                         tbBill.Text = "₱ " + filter.Sum(x => x.Total).ToString("F2");
+                       
                     }
                     //tabPagePatientDetails.SelectedTab = tabPatientDetails;
+
+
                     changeTab(1);
                 }
 
@@ -171,6 +184,11 @@ namespace ClinicSystem
             tbBill.Text = "";
             tbDoctor.Text = "";
             tbOperation.Text = "";
+            cost.Text = "";
+            Status.Text = "";
+            start.Text = "";
+            end.Text = "";
+            prescription.Text = "";
             tbDoctorDiagnosis.Text = "";
             comboAppNo.Items.Clear();
             filter.Clear();
@@ -187,10 +205,10 @@ namespace ClinicSystem
                 {
                     string dr = $"{appointment.Doctor.DoctorID}  | {appointment.Doctor.DoctorLastName}, {appointment.Doctor.DoctorFirstName}  {appointment.Doctor.DoctorMiddleName}";
                     tbDoctor.Text = dr;
-                    tbOperation.Text = appointment.Operation.OperationCode + "  |  "+appointment.Operation.OperationName;
+                    tbOperation.Text = appointment.Operation.OperationCode + "  |  "+ appointment.Operation.OperationName;
                     tbDoctorDiagnosis.Text = appointment.Diagnosis;
-                    guna2TextBox1.Text = appointment.Prescription;
-                    cost.Text = "₱ " + appointment.Total.ToString("F2");
+                    prescription.Text = appointment.Prescription;
+                    cost.Text = "₱ " + appointment.Total.ToString("N2");
                     start.Text = appointment.StartTime.ToString("yyyy-MM-dd hh:mm:ss tt");
                     end.Text = appointment.EndTime.ToString("yyyy-MM-dd hh:mm:ss tt");
                     Status.Text = appointment.Status;
@@ -252,12 +270,108 @@ namespace ClinicSystem
  
         public void changeTab(int index)
         {
-            if (index >= 0 && index < tabPagePatientDetails.TabCount)
+            if (index >= 0 && index < s.TabCount)
             {
                 isSecondTab = true;
-                tabPagePatientDetails.SelectedIndex = index;
+                s.SelectedIndex = index;
                 isSecondTab = false;
             }
+        }
+
+        private void reset2()
+        { 
+            tbDoctor.Text = "";
+            tbOperation.Text = "";
+            cost.Text = "";
+            Status.Text = "";
+            start.Text = "";
+            end.Text = "";
+            prescription.Text = "";
+            tbDoctorDiagnosis.Text = "";
+            comboAppNo.SelectedIndex = -1;
+        }
+
+        private void guna2TextBox2_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(tb.Text.Trim()))
+            {
+                reset2();
+                return;
+            }
+               
+            string t = tb.Text.Trim();
+            bool f = false;
+            if (int.TryParse(t, out int appNo))
+            {
+                foreach (Appointment appointment in filter)
+                {
+                    if (appointment.AppointmentDetailNo.ToString() == appNo.ToString())
+                    {
+                        comboAppNo.SelectedItem = appointment.AppointmentDetailNo;
+                        string dr = $"{appointment.Doctor.DoctorID}  | {appointment.Doctor.DoctorLastName}, {appointment.Doctor.DoctorFirstName}  {appointment.Doctor.DoctorMiddleName}";
+                        tbDoctor.Text = dr;
+                        tbOperation.Text = appointment.Operation.OperationCode + "  |  " + appointment.Operation.OperationName;
+                        tbDoctorDiagnosis.Text = appointment.Diagnosis;
+                        prescription.Text = appointment.Prescription;
+                        cost.Text = "₱ " + appointment.Total.ToString("N2");
+                        start.Text = appointment.StartTime.ToString("yyyy-MM-dd hh:mm:ss tt");
+                        end.Text = appointment.EndTime.ToString("yyyy-MM-dd hh:mm:ss tt");
+                        Status.Text = appointment.Status;
+                        f = true;
+                        break;
+                    }
+                }
+            } else
+            {
+                foreach (Appointment appointment in filter)
+                {
+                    if (appointment.Operation.OperationName.StartsWith(t,StringComparison.OrdinalIgnoreCase) ||
+                        appointment.Doctor.DoctorLastName.StartsWith(t, StringComparison.OrdinalIgnoreCase))
+                    {
+                        comboAppNo.SelectedItem = appointment.AppointmentDetailNo;
+                        string dr = $"{appointment.Doctor.DoctorID}  | {appointment.Doctor.DoctorLastName}, {appointment.Doctor.DoctorFirstName}  {appointment.Doctor.DoctorMiddleName}";
+                        tbDoctor.Text = dr;
+                        tbOperation.Text = appointment.Operation.OperationCode + "  |  " + appointment.Operation.OperationName;
+                        tbDoctorDiagnosis.Text = appointment.Diagnosis;
+                        prescription.Text = appointment.Prescription;
+                        cost.Text = "₱ " + appointment.Total.ToString("N2");
+                        start.Text = appointment.StartTime.ToString("yyyy-MM-dd hh:mm:ss tt");
+                        end.Text = appointment.EndTime.ToString("yyyy-MM-dd hh:mm:ss tt");
+                        Status.Text = appointment.Status;
+                        f = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!f)
+            {
+                reset2();
+            }
+
+            //int appointmentDetailNo = int.Parse(comboAppNo.SelectedItem.ToString());
+            //foreach (Appointment appointment in filter)
+            //{
+            //    if (appointment.AppointmentDetailNo == appointmentDetailNo)
+            //    {
+            //        string dr = $"{appointment.Doctor.DoctorID}  | {appointment.Doctor.DoctorLastName}, {appointment.Doctor.DoctorFirstName}  {appointment.Doctor.DoctorMiddleName}";
+            //        tbDoctor.Text = dr;
+            //        tbOperation.Text = appointment.Operation.OperationCode + "  |  " + appointment.Operation.OperationName;
+            //        tbDoctorDiagnosis.Text = appointment.Diagnosis;
+            //        guna2TextBox1.Text = appointment.Prescription;
+            //        cost.Text = "₱ " + appointment.Total.ToString("F2");
+            //        start.Text = appointment.StartTime.ToString("yyyy-MM-dd hh:mm:ss tt");
+            //        end.Text = appointment.EndTime.ToString("yyyy-MM-dd hh:mm:ss tt");
+            //        Status.Text = appointment.Status;
+            //        break;
+            //    }
+            //}
+        }
+
+        private void guna2PictureBox2_Click(object sender, EventArgs e)
+        {
+            tb.Text = "";
+            reset2();
         }
     }
 }
