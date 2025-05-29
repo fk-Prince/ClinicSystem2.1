@@ -72,7 +72,6 @@ namespace ClinicSystem.Rooms
                     panel.BackColor = Color.Transparent;
                     panel.FillColor = Color.FromArgb(111, 168, 166);
                     panel.BorderRadius = 30;
-                    //panel.Region = Region.FromHrgn(dll.CreateRoundRectRgn(0, 0, panel.Width, panel.Height, 50, 50));
 
                     Label label = createLabel("Room No ", r.RoomNo.ToString(), 10, 20);
                     panel.Controls.Add(label);

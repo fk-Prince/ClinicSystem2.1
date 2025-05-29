@@ -546,88 +546,94 @@ namespace DoctorClinic
         private string availableQ()
         {
             return @"
-                  WITH doctor_base AS (
-                    SELECT * 
-                    FROM doctor_tbl 
-                    WHERE Active = 'Yes'
-                ),
-                appointments AS (
-                    SELECT 
-                        DoctorID,
-                        TIME(StartSchedule) AS StartTime,
-                        TIME(EndSchedule) AS EndTime
-                    FROM patientappointment_tbl
-                    WHERE DATE(StartSchedule) = @Date
-                      AND (Status = 'Upcoming' OR Status = 'Reappointment')
-                ),
-                before_gap AS (
-                    SELECT 
-                        db.*,
-                        CASE 
-                            WHEN CURDATE() = @Date AND CURTIME() < TIME('09:00:00') THEN TIME('09:00:00')
-                            WHEN CURDATE() = @Date AND CURTIME() >= TIME('09:00:00') THEN CURTIME()
-                            ELSE TIME('09:00:00')
-                        END AS Available_From,
-                        MIN(a.StartTime) AS Available_Until
-                    FROM doctor_base db
-                    JOIN appointments a ON db.DoctorId = a.DoctorID
-                    GROUP BY db.DoctorId
-                    HAVING Available_Until > Available_From AND Available_From < '21:00:00'
-                ),
-                inbetween_gaps AS (
-                    SELECT 
-                        db.*,
-                        a1.EndTime AS Available_From,
-                        a2.StartTime AS Available_Until
-                    FROM appointments a1
-                    JOIN appointments a2 
-                        ON a1.DoctorID = a2.DoctorID AND a1.EndTime < a2.StartTime
-                    JOIN doctor_base db ON db.DoctorId = a1.DoctorID
-                    WHERE NOT EXISTS (
-                        SELECT 1 FROM appointments ax
-                        WHERE ax.DoctorID = a1.DoctorID
-                          AND ax.StartTime > a1.EndTime
-                          AND ax.StartTime < a2.StartTime
+                 WITH doctor_base AS (
+                        SELECT * 
+                        FROM doctor_tbl 
+                        WHERE Active = 'Yes'
+                    ),
+
+                    appointments AS (
+                        SELECT 
+                            DoctorID,
+                            TIME(StartSchedule) AS StartTime,
+                            TIME(EndSchedule) AS EndTime
+                        FROM patientappointment_tbl
+                        WHERE DATE(StartSchedule) = @Date
+                          AND (Status = 'Upcoming' OR Status = 'Reappointment')
+                    ),
+
+                    before_gap AS (
+                        SELECT 
+                            db.*,
+                            CASE 
+                                WHEN CURDATE() = @Date AND CURTIME() < TIME('09:00:00') 
+                                    THEN COALESCE(MAX(CASE WHEN a.EndTime < TIME('09:00:00') THEN a.EndTime END), TIME('09:00:00'))
+                                WHEN CURDATE() = @Date AND CURTIME() >= TIME('09:00:00') 
+                                    THEN CURTIME()
+                                ELSE TIME('09:00:00')
+                            END AS Available_From,
+                            MIN(a.StartTime) AS Available_Until
+                        FROM doctor_base db
+                        JOIN appointments a ON db.DoctorId = a.DoctorID
+                        GROUP BY db.DoctorId
+                        HAVING Available_Until > Available_From AND Available_From < '21:00:00'
+                    ),
+
+                    inbetween_gaps AS (
+                        SELECT 
+                            db.*,
+                            a1.EndTime AS Available_From,
+                            a2.StartTime AS Available_Until
+                        FROM appointments a1
+                        JOIN appointments a2 
+                            ON a1.DoctorID = a2.DoctorID AND a1.EndTime < a2.StartTime
+                        JOIN doctor_base db ON db.DoctorId = a1.DoctorID
+                        WHERE NOT EXISTS (
+                            SELECT 1 FROM appointments ax
+                            WHERE ax.DoctorID = a1.DoctorID
+                              AND ax.StartTime > a1.EndTime
+                              AND ax.StartTime < a2.StartTime
+                        )
+                        HAVING Available_From < '21:00:00'
+                    ),
+
+                    after_gap AS (
+                        SELECT 
+                            db.*,
+                            MAX(a.EndTime) AS Available_From,
+                            TIME('21:00:00') AS Available_Until
+                        FROM doctor_base db
+                        JOIN appointments a ON db.DoctorId = a.DoctorID
+                        GROUP BY db.DoctorId
+                        HAVING Available_From < TIME('21:00:00')
+                    ),
+
+                    no_appointments AS (
+                        SELECT 
+                            db.*,
+                            CASE 
+                                WHEN CURDATE() = @Date AND CURTIME() < TIME('09:00:00') 
+                                    THEN TIME('09:00:00')
+                                WHEN CURDATE() = @Date AND CURTIME() >= TIME('09:00:00') 
+                                    THEN CURTIME()
+                                ELSE TIME('09:00:00')
+                            END AS Available_From,
+                            TIME('21:00:00') AS Available_Until
+                        FROM doctor_base db
+                        WHERE NOT EXISTS (
+                            SELECT 1 FROM appointments a WHERE a.DoctorID = db.DoctorID
+                        )
+                        HAVING Available_From < '21:00:00'
                     )
-                    HAVING Available_From < '21:00:00'
-                ),
-                after_gap AS (
-                    SELECT 
-                        db.*,
-                        CASE 
-                            WHEN CURDATE() = @Date AND CURTIME() < TIME('09:00:00') THEN TIME('09:00:00')
-                            WHEN CURDATE() = @Date AND CURTIME() >= TIME('09:00:00') THEN CURTIME()
-                            ELSE MAX(a.EndTime)
-                        END AS Available_From,
-                        TIME('21:00:00') AS Available_Until
-                    FROM doctor_base db
-                    JOIN appointments a ON db.DoctorId = a.DoctorID
-                    GROUP BY db.DoctorId
-                    HAVING Available_From < TIME('21:00:00')
-                ),
-                no_appointments AS (
-                    SELECT 
-                        db.*,
-                        CASE 
-                            WHEN CURDATE() = @Date AND CURTIME() < TIME('09:00:00') THEN TIME('09:00:00')
-                            WHEN CURDATE() = @Date AND CURTIME() >= TIME('09:00:00') THEN CURTIME()
-                            ELSE TIME('09:00:00')
-                        END AS Available_From,
-                        TIME('21:00:00') AS Available_Until
-                    FROM doctor_base db
-                    WHERE NOT EXISTS (
-                        SELECT 1 FROM appointments a WHERE a.DoctorID = db.DoctorID
-                    )
-                    HAVING Available_From < '21:00:00'
-                )
-                SELECT * FROM before_gap
-                UNION ALL
-                SELECT * FROM inbetween_gaps
-                UNION ALL
-                SELECT * FROM after_gap
-                UNION ALL
-                SELECT * FROM no_appointments
-                ORDER BY DoctorId
+
+                    SELECT * FROM before_gap
+                    UNION ALL
+                    SELECT * FROM inbetween_gaps
+                    UNION ALL
+                    SELECT * FROM after_gap
+                    UNION ALL
+                    SELECT * FROM no_appointments
+                    ORDER BY DoctorId;
 
                     ";
         }

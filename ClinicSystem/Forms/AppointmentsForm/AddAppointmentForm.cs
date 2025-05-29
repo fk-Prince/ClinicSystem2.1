@@ -458,6 +458,8 @@ namespace ClinicSystem.Appointments
                     MessagePromp.ShowCenter(this, "Appointment added successfully.", MessageBoxIcon.Information);
                     //MessagePromp.MainShowMessage(this, "Appoinment Added", MessageBoxIcon.Information);
                     reset();
+                    a.Visible = false;
+                    getAvailable();
                 }
             });
         }

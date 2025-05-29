@@ -260,7 +260,7 @@ namespace ClinicSystem
                                     SELECT doctor_operation_mm_tbl.doctorid
                                     FROM doctor_operation_mm_tbl 
                                     WHERE doctor_operation_mm_tbl.operationcode = @OperationCode
-                                );
+                                ) AND doctor_tbl.Active = 'Yes';
                                 ";
 
                     using (MySqlCommand command = new MySqlCommand(query, conn))

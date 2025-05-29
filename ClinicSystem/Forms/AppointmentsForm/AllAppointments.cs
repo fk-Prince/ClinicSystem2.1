@@ -241,6 +241,5 @@ namespace ClinicSystem.Appointments
             dataGrid.Columns[0].Width = 100;
         }
 
-        
     }
 }

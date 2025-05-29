@@ -678,7 +678,8 @@ namespace ClinicSystem
                     comboRoom.Items.Clear();
                     comboOperation.Items.Clear();
                     comboDoctor.Items.Clear();
-
+                    getAvailable();
+                    a.Visible = false;
 
                 }
             });
