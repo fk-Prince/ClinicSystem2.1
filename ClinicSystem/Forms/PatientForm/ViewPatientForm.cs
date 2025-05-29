@@ -84,6 +84,8 @@ namespace ClinicSystem
         private void ViewPatientForm_Load(object sender, EventArgs e)
         {
 
+
+
             d1.EnableHeadersVisualStyles = false;
             d1.ColumnHeadersDefaultCellStyle.BackColor = ColorTranslator.FromHtml("#5CA8A3");
             d1.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
