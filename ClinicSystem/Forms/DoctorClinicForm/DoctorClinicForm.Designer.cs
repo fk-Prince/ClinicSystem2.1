@@ -32,6 +32,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.viewDentistB = new Guna.UI2.WinForms.Guna2Button();
             this.addDentistB = new Guna.UI2.WinForms.Guna2Button();
+            this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             this.doctorpanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -108,12 +109,34 @@
             this.addDentistB.Click += new System.EventHandler(this.addDoctorB_Click);
             this.addDentistB.MouseClick += new System.Windows.Forms.MouseEventHandler(this.mouseClicked);
             // 
+            // guna2Button1
+            // 
+            this.guna2Button1.BackColor = System.Drawing.Color.Transparent;
+            this.guna2Button1.BorderColor = System.Drawing.Color.Gray;
+            this.guna2Button1.BorderRadius = 18;
+            this.guna2Button1.BorderThickness = 1;
+            this.guna2Button1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2Button1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2Button1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(184)))), ((int)(((byte)(234)))), ((int)(((byte)(224)))));
+            this.guna2Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.guna2Button1.ForeColor = System.Drawing.Color.Black;
+            this.guna2Button1.Location = new System.Drawing.Point(509, 12);
+            this.guna2Button1.Name = "guna2Button1";
+            this.guna2Button1.Size = new System.Drawing.Size(203, 34);
+            this.guna2Button1.TabIndex = 112;
+            this.guna2Button1.Text = " Available Doctors";
+            this.guna2Button1.Click += new System.EventHandler(this.guna2Button1_Click);
+            this.guna2Button1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.mouseClicked);
+            // 
             // DoctorMainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(183)))), ((int)(((byte)(230)))), ((int)(((byte)(222)))));
             this.ClientSize = new System.Drawing.Size(1084, 719);
+            this.Controls.Add(this.guna2Button1);
             this.Controls.Add(this.doctorpanel);
             this.Controls.Add(this.addDentistB);
             this.Controls.Add(this.viewDentistB);
@@ -132,5 +155,6 @@
         private Guna.UI2.WinForms.Guna2Button viewDentistB;
         private System.Windows.Forms.Panel panel2;
         private Guna.UI2.WinForms.Guna2Button addDentistB;
+        private Guna.UI2.WinForms.Guna2Button guna2Button1;
     }
 }

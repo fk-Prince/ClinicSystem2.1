@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using ClinicSystem.Entity;
 using ClinicSystem.PatientForm;
 using ClinicSystem.UserLoginForm;
 using MySql.Data.MySqlClient;
@@ -138,6 +140,11 @@ namespace ClinicSystem.Helpers
            );
         }
 
-
+        public static DoctorAppointment GetAvailableDoctor(MySqlDataReader reader)
+        {
+                return new DoctorAppointment(
+                GetDoctor(reader), reader.GetTimeSpan("Available_From"), reader.GetTimeSpan("Available_Until")
+                );
+        }
     }
 }

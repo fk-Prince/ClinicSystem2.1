@@ -138,7 +138,7 @@ namespace ClinicSystem.MainClinic
             return todayAppointment;
         }
 
-        public DoctorStats getDoctorStats()
+        public DoctorAppointment getDoctorStats()
         {
         
             try
@@ -171,7 +171,7 @@ namespace ClinicSystem.MainClinic
                                 int totalApp = reader.GetInt32("totalAppointment");
                                 int totalPat = reader.GetInt32("totalPatient");
                                 double revenue = reader.GetDouble("REVENUE");
-                                return new DoctorStats(doctor, totalPat, totalApp, revenue);
+                                return new DoctorAppointment(doctor, totalPat, totalApp, revenue);
                             }
                         }
                     }
@@ -184,7 +184,7 @@ namespace ClinicSystem.MainClinic
             return null;
         }
 
-        internal DoctorStats getDoctorStatsLast()
+        internal DoctorAppointment getDoctorStatsLast()
         {
             try
             {
@@ -218,7 +218,7 @@ namespace ClinicSystem.MainClinic
                                 int totalApp = reader.GetInt32("totalAppointment");
                                 int totalPat = reader.GetInt32("totalPatient");
                                 double revenue = reader.GetDouble("REVENUE");
-                                return new DoctorStats(doctor, totalPat, totalApp, revenue);
+                                return new DoctorAppointment(doctor, totalPat, totalApp, revenue);
                             }
                         }
                     }

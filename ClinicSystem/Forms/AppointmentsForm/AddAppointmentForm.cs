@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ClinicSystem.Entity;
 using ClinicSystem.MessagePromps;
 using ClinicSystem.PatientForm;
 using ClinicSystem.Rooms;
@@ -35,6 +37,8 @@ namespace ClinicSystem.Appointments
         private Operation selectedOperation;
         private Doctor selectedDoctor;
         private int staffid;
+        private DataTable table;
+        private List<DoctorAppointment> ap;
         public AddAppointmentForm(int staffid)
         {
             this.staffid = staffid;
@@ -53,11 +57,56 @@ namespace ClinicSystem.Appointments
             comboPatientID.AutoCompleteCustomSource = auto;
 
             scheduleDate.Value = DateTime.Now;
+            
+            table = new DataTable();
+            table.Columns.Add("Doctor ID", typeof(string));
+            table.Columns.Add("Available From", typeof(string));
+            table.Columns.Add("Available Until", typeof(string));
+            dr.DataSource = table;
+
+
+            d1.Value = DateTime.Now;
+            getAvailable();
         }
         private void close(object sender, EventArgs e)
         {
             DiscountChoicePromp.closePanel();
         }
+
+        private void getAvailable()
+        {
+           
+            table.Clear();
+            ap = doctorRepository.getDoctorAvailable(d1.Value);
+
+            string doctorSearcgh = search.Text.Trim();
+            table.Clear();
+            foreach (DoctorAppointment a in ap)
+            {
+                DateTime stime = DateTime.Today.Add(a.StartTime);
+                DateTime etime = DateTime.Today.Add(a.EndTime);
+                if (string.IsNullOrWhiteSpace(doctorSearcgh))
+                {
+                    table.Rows.Add(
+                               a.Doctor.DoctorID,
+                               stime.ToString("hh:mm:ss tt"),
+                               etime.ToString("hh:mm:ss tt")
+                            );
+                }
+                else if (
+                    a.Doctor.DoctorID.StartsWith(doctorSearcgh, StringComparison.OrdinalIgnoreCase) ||
+                    a.Doctor.DoctorID.EndsWith(doctorSearcgh, StringComparison.OrdinalIgnoreCase))
+                {
+                    table.Rows.Add(
+                            a.Doctor.DoctorID,
+                            stime.ToString("hh:mm:ss tt"),
+                            etime.ToString("hh:mm:ss tt")
+                         );
+
+                }
+            }
+        }
+
 
         private void reset23()
         {
@@ -533,6 +582,69 @@ namespace ClinicSystem.Appointments
             lP.Invalidate();
             mP.Invalidate();
 
+        }
+
+        private void guna2Button1_Click_1(object sender, EventArgs e)
+        {
+            a.Visible = !a.Visible;
+        }
+
+        private void AddAppointmentForm_Load(object sender, EventArgs e)
+        {
+            dr.EnableHeadersVisualStyles = false;
+            dr.ColumnHeadersDefaultCellStyle.BackColor = ColorTranslator.FromHtml("#5CA8A3");
+            dr.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dr.ColumnHeadersDefaultCellStyle.SelectionBackColor = ColorTranslator.FromHtml("#5CA8A3");
+            dr.ColumnHeadersDefaultCellStyle.SelectionForeColor = Color.White;
+
+
+           
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+            a.Visible = !a.Visible;
+        }
+
+        private void dr_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void d1_ValueChanged(object sender, EventArgs e)
+        {
+            getAvailable();
+        }
+
+        private void guna2TextBox1_TextChanged(object sender, EventArgs e)
+        {
+            string doctorSearcgh = search.Text.Trim();
+            table.Clear();
+            foreach (DoctorAppointment a in ap)
+            {
+                DateTime stime = DateTime.Today.Add(a.StartTime);
+                DateTime etime = DateTime.Today.Add(a.EndTime);
+                if (string.IsNullOrWhiteSpace(doctorSearcgh))
+                {
+                    table.Rows.Add(
+                               a.Doctor.DoctorID,
+                               stime.ToString("hh:mm:ss tt"),
+                               etime.ToString("hh:mm:ss tt")
+                            );
+                }
+                else if (
+                    a.Doctor.DoctorID.StartsWith(doctorSearcgh, StringComparison.OrdinalIgnoreCase) ||
+                    a.Doctor.DoctorID.EndsWith(doctorSearcgh, StringComparison.OrdinalIgnoreCase))
+                {
+                    table.Rows.Add(
+                            a.Doctor.DoctorID,
+                            stime.ToString("hh:mm:ss tt"),
+                            etime.ToString("hh:mm:ss tt")
+                         );
+                 
+                }
+            }
         }
     }
 }

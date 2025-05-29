@@ -145,7 +145,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entity\DoctorStats.cs" />
+    <Compile Include="Entity\DoctorAppointment.cs" />
     <Compile Include="Entity\PenaltyAppointment.cs" />
     <Compile Include="Forms\AppointmentsForm\AddAppointmentForm.cs">
       <SubType>Form</SubType>
@@ -171,6 +171,12 @@
     </Compile>
     <Compile Include="Forms\AppointmentsForm\MissedAppointmentForm.Designer.cs">
       <DependentUpon>MissedAppointmentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DoctorClinicForm\AvailableDoctors.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DoctorClinicForm\AvailableDoctors.Designer.cs">
+      <DependentUpon>AvailableDoctors.cs</DependentUpon>
     </Compile>
     <Compile Include="MessagePromps\RFIDPromp.cs">
       <SubType>Component</SubType>
@@ -330,6 +336,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AppointmentsForm\MissedAppointmentForm.resx">
       <DependentUpon>MissedAppointmentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DoctorClinicForm\AvailableDoctors.resx">
+      <DependentUpon>AvailableDoctors.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Printer\PrintAppointmentReceipt.resx">
       <DependentUpon>PrintAppointmentReceipt.cs</DependentUpon>

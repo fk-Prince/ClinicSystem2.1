@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using ClinicSystem;
+using ClinicSystem.Entity;
 using ClinicSystem.Helpers;
 using ClinicSystem.PatientForm;
 using ClinicSystem.Repository;
@@ -460,27 +461,176 @@ namespace DoctorClinic
             }
         }
 
-        //internal void removeSpecialized(Doctor doc, Operation op)
-        //{
-        //    try
-        //    {
-        //        using (MySqlConnection conn = new MySqlConnection(DatabaseConnection.getConnection()))
-        //        {
-        //            conn.Open();
-        //            string query =
-        //                "DELETE FROM doctor_operation_mm_tbl WHERE doctorid = @doctorid AND operationcode = @operationcode";
-        //            using (MySqlCommand command = new MySqlCommand(query, conn))
-        //            {
-        //                command.Parameters.AddWithValue("@doctorid", doc.DoctorID);
-        //                command.Parameters.AddWithValue("@operationcode", op.OperationCode);
-        //                command.ExecuteNonQuery();
-        //            }
-        //        }
-        //    }
-        //    catch (MySqlException ex)
-        //    {
-        //        MessageBox.Show("ERROR FROM removeSpecialized() DB " + ex.Message);
-        //    }
-        //}
+        internal List<DoctorAppointment> getDoctorAvailable(DateTime value)
+        {
+
+            List<DoctorAppointment> list = new List<DoctorAppointment>();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(DatabaseConnection.getConnection()))
+                {
+                    conn.Open();
+                    string query = availableQ();
+                    //string query = @"
+                    //    SELECT 
+                    //        d.*,
+                    //        CASE 
+                    //            WHEN MIN(a.StartSchedule) IS NULL THEN 
+                    //                CASE 
+                    //                    WHEN DATE(@Date) = CURDATE() AND CURTIME() < '09:00:00' THEN '09:00:00'
+                    //                    WHEN DATE(@Date) = CURDATE() AND CURTIME() >= '09:00:00' THEN CURTIME()  
+                    //                    ELSE '09:00:00'
+                    //                END
+                    //            WHEN TIME(MIN(a.StartSchedule)) > 
+                    //                CASE 
+                    //                    WHEN DATE(@Date) = CURDATE() AND CURTIME() < '09:00:00' THEN '09:00:00'
+                    //                    WHEN DATE(@Date) = CURDATE() AND CURTIME() >= '09:00:00' THEN CURTIME()
+                    //                    ELSE '09:00:00'
+                    //                END 
+                    //            THEN 
+                    //                CASE 
+                    //                    WHEN DATE(@Date) = CURDATE() AND CURTIME() < '09:00:00' THEN '09:00:00'
+                    //                    WHEN DATE(@Date) = CURDATE() AND CURTIME() >= '09:00:00' THEN CURTIME()
+                    //                    ELSE '09:00:00'
+                    //                END
+                    //            ELSE 
+                    //                CASE 
+                    //                    WHEN DATE(@Date) = CURDATE() AND CURTIME() > TIME(MAX(a.EndSchedule)) THEN 
+                    //                        CASE 
+                    //                            WHEN CURTIME() < '09:00:00' THEN '09:00:00'
+                    //                            ELSE CURTIME()
+                    //                        END
+                    //                    ELSE TIME(MAX(a.EndSchedule))
+                    //                END
+                    //        END as Available_From,
+                    //        CASE 
+                    //            WHEN MIN(a.StartSchedule) IS NULL THEN '21:00:00'
+                    //            WHEN TIME(MIN(a.StartSchedule)) > 
+                    //                CASE 
+                    //                    WHEN DATE(@Date) = CURDATE() AND CURTIME() < '09:00:00' THEN '09:00:00'
+                    //                    WHEN DATE(@Date) = CURDATE() AND CURTIME() >= '09:00:00' THEN CURTIME()
+                    //                    ELSE '09:00:00'
+                    //                END 
+                    //            THEN TIME(MIN(a.StartSchedule))
+                    //            ELSE '21:00:00'
+                    //        END as Available_Until,
+                    //        COUNT(a.AppointmentDetailNo) as todayCount
+                    //    FROM doctor_tbl d
+                    //    LEFT JOIN patientappointment_tbl a ON d.DoctorId = a.DoctorID
+                    //        AND DATE(a.StartSchedule) = DATE(@Date)
+                    //        AND (a.Status = 'Upcoming' OR a.Status = 'Reappointment')
+                    //    WHERE d.Active = 'Yes'
+                    //    GROUP BY d.DoctorId
+                    //    ORDER BY d.DoctorId
+                    //    ";
+
+                    using (MySqlCommand command = new MySqlCommand(query,conn))
+                    {
+                        command.Parameters.AddWithValue("@Date", value.Date);
+                        using(MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                list.Add(EntityMapping.GetAvailableDoctor(reader));
+                            }
+                        }
+                    }
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("ERROR FROM insertSpecialized() DB " + ex.Message);
+            }
+            return list;
+        }
+        private string availableQ()
+        {
+            return @"
+                  WITH doctor_base AS (
+                    SELECT * 
+                    FROM doctor_tbl 
+                    WHERE Active = 'Yes'
+                ),
+                appointments AS (
+                    SELECT 
+                        DoctorID,
+                        TIME(StartSchedule) AS StartTime,
+                        TIME(EndSchedule) AS EndTime
+                    FROM patientappointment_tbl
+                    WHERE DATE(StartSchedule) = @Date
+                      AND (Status = 'Upcoming' OR Status = 'Reappointment')
+                ),
+                before_gap AS (
+                    SELECT 
+                        db.*,
+                        CASE 
+                            WHEN CURDATE() = @Date AND CURTIME() < TIME('09:00:00') THEN TIME('09:00:00')
+                            WHEN CURDATE() = @Date AND CURTIME() >= TIME('09:00:00') THEN CURTIME()
+                            ELSE TIME('09:00:00')
+                        END AS Available_From,
+                        MIN(a.StartTime) AS Available_Until
+                    FROM doctor_base db
+                    JOIN appointments a ON db.DoctorId = a.DoctorID
+                    GROUP BY db.DoctorId
+                    HAVING Available_Until > Available_From AND Available_From < '21:00:00'
+                ),
+                inbetween_gaps AS (
+                    SELECT 
+                        db.*,
+                        a1.EndTime AS Available_From,
+                        a2.StartTime AS Available_Until
+                    FROM appointments a1
+                    JOIN appointments a2 
+                        ON a1.DoctorID = a2.DoctorID AND a1.EndTime < a2.StartTime
+                    JOIN doctor_base db ON db.DoctorId = a1.DoctorID
+                    WHERE NOT EXISTS (
+                        SELECT 1 FROM appointments ax
+                        WHERE ax.DoctorID = a1.DoctorID
+                          AND ax.StartTime > a1.EndTime
+                          AND ax.StartTime < a2.StartTime
+                    )
+                    HAVING Available_From < '21:00:00'
+                ),
+                after_gap AS (
+                    SELECT 
+                        db.*,
+                        CASE 
+                            WHEN CURDATE() = @Date AND CURTIME() < TIME('09:00:00') THEN TIME('09:00:00')
+                            WHEN CURDATE() = @Date AND CURTIME() >= TIME('09:00:00') THEN CURTIME()
+                            ELSE MAX(a.EndTime)
+                        END AS Available_From,
+                        TIME('21:00:00') AS Available_Until
+                    FROM doctor_base db
+                    JOIN appointments a ON db.DoctorId = a.DoctorID
+                    GROUP BY db.DoctorId
+                    HAVING Available_From < TIME('21:00:00')
+                ),
+                no_appointments AS (
+                    SELECT 
+                        db.*,
+                        CASE 
+                            WHEN CURDATE() = @Date AND CURTIME() < TIME('09:00:00') THEN TIME('09:00:00')
+                            WHEN CURDATE() = @Date AND CURTIME() >= TIME('09:00:00') THEN CURTIME()
+                            ELSE TIME('09:00:00')
+                        END AS Available_From,
+                        TIME('21:00:00') AS Available_Until
+                    FROM doctor_base db
+                    WHERE NOT EXISTS (
+                        SELECT 1 FROM appointments a WHERE a.DoctorID = db.DoctorID
+                    )
+                    HAVING Available_From < '21:00:00'
+                )
+                SELECT * FROM before_gap
+                UNION ALL
+                SELECT * FROM inbetween_gaps
+                UNION ALL
+                SELECT * FROM after_gap
+                UNION ALL
+                SELECT * FROM no_appointments
+                ORDER BY DoctorId
+
+                    ";
+        }
+ 
     }
 }

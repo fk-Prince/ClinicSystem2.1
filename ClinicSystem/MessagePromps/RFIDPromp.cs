@@ -23,7 +23,7 @@ namespace ClinicSystem.MessagePromps
         {
             if (instance == null)
             {
-                string[] ports = SerialPort.GetPortNames();
+                string[] ports = SerialPort.GetPortNames();  
                 if (ports.Length <= 0)
                 {
                     MessageBox.Show("No RFID Ports Found", "RFID NOT AVAILABLE", MessageBoxButtons.OK, MessageBoxIcon.Information);

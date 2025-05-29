@@ -89,7 +89,7 @@ namespace ClinicSystem.MainClinic
 
         private void displayDoctorStats()
         {
-            DoctorStats current = clinicRepository.getDoctorStats();
+            DoctorAppointment current = clinicRepository.getDoctorStats();
             if (current != null)
             {
                 currentTP.Text = current.TotalPatient.ToString();
@@ -101,7 +101,7 @@ namespace ClinicSystem.MainClinic
                 currentdHired.Text = current.Doctor.DateHired.ToString("yyyy-MM-dd");
                 currentdImage.Image = current.Doctor.Image == null ? Properties.Resources.doctoruser : current.Doctor.Image;
             }
-            DoctorStats last = clinicRepository.getDoctorStatsLast();
+            DoctorAppointment last = clinicRepository.getDoctorStatsLast();
             if (last != null)
             {
                 lastTP.Text = last.TotalPatient.ToString();

@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.patPanel = new System.Windows.Forms.Panel();
             this.panelGender = new System.Windows.Forms.Panel();
@@ -112,6 +116,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.slideApp = new System.Windows.Forms.Timer(this.components);
             this.slidePat = new System.Windows.Forms.Timer(this.components);
+            this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
+            this.a = new Guna.UI2.WinForms.Guna2Panel();
+            this.search = new Guna.UI2.WinForms.Guna2TextBox();
+            this.d1 = new Guna.UI2.WinForms.Guna2DateTimePicker();
+            this.label21 = new System.Windows.Forms.Label();
+            this.dr = new Guna.UI2.WinForms.Guna2DataGridView();
             this.panel1.SuspendLayout();
             this.patPanel.SuspendLayout();
             this.panelGender.SuspendLayout();
@@ -136,12 +146,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
             this.panel10.SuspendLayout();
+            this.a.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dr)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(249)))), ((int)(((byte)(245)))));
+            this.panel1.Controls.Add(this.guna2Button1);
             this.panel1.Controls.Add(this.patPanel);
             this.panel1.Controls.Add(this.appPanel);
             this.panel1.Controls.Add(this.switchButton);
@@ -171,11 +184,11 @@
             this.patPanel.Controls.Add(this.panelAge);
             this.patPanel.Controls.Add(this.panelLastName);
             this.patPanel.Controls.Add(this.panelMidName);
-            this.patPanel.Location = new System.Drawing.Point(10, 247);
+            this.patPanel.Location = new System.Drawing.Point(14, 206);
             this.patPanel.MaximumSize = new System.Drawing.Size(1500, 1080);
             this.patPanel.MinimumSize = new System.Drawing.Size(1055, 400);
             this.patPanel.Name = "patPanel";
-            this.patPanel.Size = new System.Drawing.Size(1055, 400);
+            this.patPanel.Size = new System.Drawing.Size(1055, 441);
             this.patPanel.TabIndex = 1;
             // 
             // panelGender
@@ -188,7 +201,7 @@
             this.panelGender.Controls.Add(this.label8);
             this.panelGender.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.panelGender.ForeColor = System.Drawing.Color.Black;
-            this.panelGender.Location = new System.Drawing.Point(35, 254);
+            this.panelGender.Location = new System.Drawing.Point(35, 274);
             this.panelGender.Name = "panelGender";
             this.panelGender.Size = new System.Drawing.Size(419, 46);
             this.panelGender.TabIndex = 10051;
@@ -247,7 +260,7 @@
             this.panelContNum.Controls.Add(this.ContactNo);
             this.panelContNum.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.panelContNum.ForeColor = System.Drawing.Color.Black;
-            this.panelContNum.Location = new System.Drawing.Point(35, 306);
+            this.panelContNum.Location = new System.Drawing.Point(35, 326);
             this.panelContNum.Name = "panelContNum";
             this.panelContNum.Size = new System.Drawing.Size(419, 37);
             this.panelContNum.TabIndex = 10057;
@@ -318,7 +331,7 @@
             this.panelAddress.Controls.Add(this.label5);
             this.panelAddress.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.panelAddress.ForeColor = System.Drawing.Color.Black;
-            this.panelAddress.Location = new System.Drawing.Point(35, 139);
+            this.panelAddress.Location = new System.Drawing.Point(35, 159);
             this.panelAddress.Name = "panelAddress";
             this.panelAddress.Size = new System.Drawing.Size(993, 63);
             this.panelAddress.TabIndex = 10053;
@@ -376,7 +389,7 @@
             this.panelBirthDate.Controls.Add(this.label6);
             this.panelBirthDate.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.panelBirthDate.ForeColor = System.Drawing.Color.Black;
-            this.panelBirthDate.Location = new System.Drawing.Point(35, 208);
+            this.panelBirthDate.Location = new System.Drawing.Point(35, 228);
             this.panelBirthDate.Name = "panelBirthDate";
             this.panelBirthDate.Size = new System.Drawing.Size(419, 40);
             this.panelBirthDate.TabIndex = 10055;
@@ -427,7 +440,7 @@
             this.panelFirstName.Controls.Add(this.label2);
             this.panelFirstName.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.panelFirstName.ForeColor = System.Drawing.Color.Black;
-            this.panelFirstName.Location = new System.Drawing.Point(35, 18);
+            this.panelFirstName.Location = new System.Drawing.Point(35, 38);
             this.panelFirstName.Margin = new System.Windows.Forms.Padding(50);
             this.panelFirstName.MaximumSize = new System.Drawing.Size(620, 35);
             this.panelFirstName.MinimumSize = new System.Drawing.Size(419, 35);
@@ -489,7 +502,7 @@
             this.panelAge.Controls.Add(this.label7);
             this.panelAge.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.panelAge.ForeColor = System.Drawing.Color.Black;
-            this.panelAge.Location = new System.Drawing.Point(604, 213);
+            this.panelAge.Location = new System.Drawing.Point(604, 233);
             this.panelAge.Name = "panelAge";
             this.panelAge.Size = new System.Drawing.Size(145, 40);
             this.panelAge.TabIndex = 10056;
@@ -545,7 +558,7 @@
             this.panelLastName.Controls.Add(this.label4);
             this.panelLastName.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.panelLastName.ForeColor = System.Drawing.Color.Black;
-            this.panelLastName.Location = new System.Drawing.Point(35, 99);
+            this.panelLastName.Location = new System.Drawing.Point(35, 119);
             this.panelLastName.Name = "panelLastName";
             this.panelLastName.Size = new System.Drawing.Size(620, 35);
             this.panelLastName.TabIndex = 10054;
@@ -603,7 +616,7 @@
             this.panelMidName.Controls.Add(this.label3);
             this.panelMidName.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.panelMidName.ForeColor = System.Drawing.Color.Black;
-            this.panelMidName.Location = new System.Drawing.Point(35, 58);
+            this.panelMidName.Location = new System.Drawing.Point(35, 78);
             this.panelMidName.Name = "panelMidName";
             this.panelMidName.Size = new System.Drawing.Size(620, 35);
             this.panelMidName.TabIndex = 10052;
@@ -658,6 +671,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.appPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.appPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(249)))), ((int)(((byte)(245)))));
+            this.appPanel.Controls.Add(this.a);
             this.appPanel.Controls.Add(this.addAppointment);
             this.appPanel.Controls.Add(this.p4);
             this.appPanel.Controls.Add(this.p3);
@@ -668,11 +682,11 @@
             this.appPanel.Controls.Add(this.Add);
             this.appPanel.Controls.Add(this.tbListOperation);
             this.appPanel.Controls.Add(this.p1);
-            this.appPanel.Location = new System.Drawing.Point(1082, 233);
+            this.appPanel.Location = new System.Drawing.Point(1086, 192);
             this.appPanel.MaximumSize = new System.Drawing.Size(1920, 1080);
             this.appPanel.MinimumSize = new System.Drawing.Size(1055, 432);
             this.appPanel.Name = "appPanel";
-            this.appPanel.Size = new System.Drawing.Size(1055, 432);
+            this.appPanel.Size = new System.Drawing.Size(1055, 473);
             this.appPanel.TabIndex = 10064;
             // 
             // addAppointment
@@ -691,7 +705,7 @@
             this.addAppointment.ForeColor = System.Drawing.Color.White;
             this.addAppointment.HoverState.BorderColor = System.Drawing.Color.Silver;
             this.addAppointment.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
-            this.addAppointment.Location = new System.Drawing.Point(690, 366);
+            this.addAppointment.Location = new System.Drawing.Point(690, 407);
             this.addAppointment.Name = "addAppointment";
             this.addAppointment.Size = new System.Drawing.Size(337, 42);
             this.addAppointment.TabIndex = 10100;
@@ -706,7 +720,7 @@
             this.p4.Controls.Add(this.label11);
             this.p4.Controls.Add(this.comboRoom);
             this.p4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.p4.Location = new System.Drawing.Point(49, 171);
+            this.p4.Location = new System.Drawing.Point(49, 191);
             this.p4.MaximumSize = new System.Drawing.Size(600, 48);
             this.p4.MinimumSize = new System.Drawing.Size(402, 48);
             this.p4.Name = "p4";
@@ -750,7 +764,7 @@
             this.p3.Controls.Add(this.textBox14);
             this.p3.Controls.Add(this.label12);
             this.p3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.p3.Location = new System.Drawing.Point(49, 117);
+            this.p3.Location = new System.Drawing.Point(49, 137);
             this.p3.MaximumSize = new System.Drawing.Size(600, 48);
             this.p3.MinimumSize = new System.Drawing.Size(402, 48);
             this.p3.Name = "p3";
@@ -804,7 +818,7 @@
             this.p5.Controls.Add(this.panel15);
             this.p5.Controls.Add(this.panel14);
             this.p5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.p5.Location = new System.Drawing.Point(66, 225);
+            this.p5.Location = new System.Drawing.Point(66, 245);
             this.p5.MaximumSize = new System.Drawing.Size(500, 206);
             this.p5.MinimumSize = new System.Drawing.Size(374, 206);
             this.p5.Name = "p5";
@@ -984,7 +998,7 @@
             this.panel19.Controls.Add(this.textBox18);
             this.panel19.Controls.Add(this.label18);
             this.panel19.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.panel19.Location = new System.Drawing.Point(697, 292);
+            this.panel19.Location = new System.Drawing.Point(697, 312);
             this.panel19.Name = "panel19";
             this.panel19.Size = new System.Drawing.Size(330, 44);
             this.panel19.TabIndex = 10090;
@@ -1039,7 +1053,7 @@
             this.p2.Controls.Add(this.textBox15);
             this.p2.Controls.Add(this.label19);
             this.p2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.p2.Location = new System.Drawing.Point(49, 63);
+            this.p2.Location = new System.Drawing.Point(49, 83);
             this.p2.MaximumSize = new System.Drawing.Size(600, 48);
             this.p2.MinimumSize = new System.Drawing.Size(402, 48);
             this.p2.Name = "p2";
@@ -1092,7 +1106,7 @@
             this.RemoveStack.FlatAppearance.BorderSize = 0;
             this.RemoveStack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.RemoveStack.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.RemoveStack.Location = new System.Drawing.Point(487, 29);
+            this.RemoveStack.Location = new System.Drawing.Point(487, 49);
             this.RemoveStack.Name = "RemoveStack";
             this.RemoveStack.Size = new System.Drawing.Size(24, 24);
             this.RemoveStack.TabIndex = 10097;
@@ -1107,7 +1121,7 @@
             this.Add.FlatAppearance.BorderSize = 0;
             this.Add.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Add.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.Add.Location = new System.Drawing.Point(457, 29);
+            this.Add.Location = new System.Drawing.Point(457, 49);
             this.Add.Name = "Add";
             this.Add.Size = new System.Drawing.Size(24, 24);
             this.Add.TabIndex = 10095;
@@ -1119,7 +1133,7 @@
             // 
             this.tbListOperation.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tbListOperation.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.tbListOperation.Location = new System.Drawing.Point(454, 59);
+            this.tbListOperation.Location = new System.Drawing.Point(454, 79);
             this.tbListOperation.Multiline = true;
             this.tbListOperation.Name = "tbListOperation";
             this.tbListOperation.ReadOnly = true;
@@ -1135,7 +1149,7 @@
             this.p1.Controls.Add(this.textBox21);
             this.p1.Controls.Add(this.label20);
             this.p1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.p1.Location = new System.Drawing.Point(49, 9);
+            this.p1.Location = new System.Drawing.Point(49, 29);
             this.p1.MaximumSize = new System.Drawing.Size(600, 34);
             this.p1.MinimumSize = new System.Drawing.Size(402, 48);
             this.p1.Name = "p1";
@@ -1295,7 +1309,7 @@
             this.panel10.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(183)))), ((int)(((byte)(230)))), ((int)(((byte)(222)))));
             this.panel10.Controls.Add(this.label1);
-            this.panel10.Location = new System.Drawing.Point(-1, 0);
+            this.panel10.Location = new System.Drawing.Point(-2, 0);
             this.panel10.MaximumSize = new System.Drawing.Size(1920, 103);
             this.panel10.MinimumSize = new System.Drawing.Size(1080, 103);
             this.panel10.Name = "panel10";
@@ -1327,6 +1341,161 @@
             // 
             this.slidePat.Interval = 1;
             this.slidePat.Tick += new System.EventHandler(this.slidePat_Tick);
+            // 
+            // guna2Button1
+            // 
+            this.guna2Button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.guna2Button1.BorderRadius = 5;
+            this.guna2Button1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2Button1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2Button1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(168)))), ((int)(((byte)(166)))));
+            this.guna2Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.guna2Button1.ForeColor = System.Drawing.Color.White;
+            this.guna2Button1.Location = new System.Drawing.Point(655, 127);
+            this.guna2Button1.MaximumSize = new System.Drawing.Size(200, 50);
+            this.guna2Button1.MinimumSize = new System.Drawing.Size(129, 30);
+            this.guna2Button1.Name = "guna2Button1";
+            this.guna2Button1.Size = new System.Drawing.Size(200, 30);
+            this.guna2Button1.TabIndex = 10101;
+            this.guna2Button1.Text = "Doctor Available";
+            this.guna2Button1.Visible = false;
+            this.guna2Button1.Click += new System.EventHandler(this.guna2Button1_Click_1);
+            // 
+            // a
+            // 
+            this.a.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.a.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(249)))), ((int)(((byte)(246)))));
+            this.a.Controls.Add(this.search);
+            this.a.Controls.Add(this.d1);
+            this.a.Controls.Add(this.label21);
+            this.a.Controls.Add(this.dr);
+            this.a.Location = new System.Drawing.Point(451, 3);
+            this.a.MaximumSize = new System.Drawing.Size(1000, 1080);
+            this.a.MinimumSize = new System.Drawing.Size(591, 431);
+            this.a.Name = "a";
+            this.a.Size = new System.Drawing.Size(601, 482);
+            this.a.TabIndex = 10106;
+            this.a.Visible = false;
+            // 
+            // search
+            // 
+            this.search.BorderRadius = 5;
+            this.search.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.search.DefaultText = "";
+            this.search.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.search.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.search.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.search.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.search.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.search.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.search.ForeColor = System.Drawing.Color.Black;
+            this.search.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.search.Location = new System.Drawing.Point(264, 3);
+            this.search.Name = "search";
+            this.search.PlaceholderText = "Search Doctor ID";
+            this.search.SelectedText = "";
+            this.search.Size = new System.Drawing.Size(200, 29);
+            this.search.TabIndex = 10107;
+            this.search.TextChanged += new System.EventHandler(this.search_TextChanged);
+            // 
+            // d1
+            // 
+            this.d1.BorderRadius = 5;
+            this.d1.Checked = true;
+            this.d1.FillColor = System.Drawing.Color.PaleGreen;
+            this.d1.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.d1.Format = System.Windows.Forms.DateTimePickerFormat.Long;
+            this.d1.Location = new System.Drawing.Point(6, 4);
+            this.d1.MaxDate = new System.DateTime(9998, 12, 31, 0, 0, 0, 0);
+            this.d1.MinDate = new System.DateTime(1753, 1, 1, 0, 0, 0, 0);
+            this.d1.Name = "d1";
+            this.d1.Size = new System.Drawing.Size(243, 29);
+            this.d1.TabIndex = 10003;
+            this.d1.Value = new System.DateTime(2025, 4, 25, 0, 0, 0, 0);
+            this.d1.ValueChanged += new System.EventHandler(this.d1_ValueChanged);
+            // 
+            // label21
+            // 
+            this.label21.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label21.AutoSize = true;
+            this.label21.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.label21.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.Location = new System.Drawing.Point(575, -3);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(25, 28);
+            this.label21.TabIndex = 10106;
+            this.label21.Text = "X";
+            this.label21.Click += new System.EventHandler(this.label21_Click);
+            // 
+            // dr
+            // 
+            this.dr.AllowUserToAddRows = false;
+            this.dr.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.LightGray;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(210)))), ((int)(((byte)(205)))));
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
+            this.dr.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.dr.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(88)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dr.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.dr.ColumnHeadersHeight = 50;
+            this.dr.Cursor = System.Windows.Forms.Cursors.Hand;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(44)))), ((int)(((byte)(54)))));
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(44)))), ((int)(((byte)(54)))));
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dr.DefaultCellStyle = dataGridViewCellStyle3;
+            this.dr.GridColor = System.Drawing.Color.White;
+            this.dr.Location = new System.Drawing.Point(3, 38);
+            this.dr.MaximumSize = new System.Drawing.Size(1000, 1080);
+            this.dr.Name = "dr";
+            this.dr.ReadOnly = true;
+            this.dr.RowHeadersVisible = false;
+            this.dr.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(210)))), ((int)(((byte)(205)))));
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black;
+            this.dr.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            this.dr.RowTemplate.Height = 40;
+            this.dr.Size = new System.Drawing.Size(595, 440);
+            this.dr.TabIndex = 10105;
+            this.dr.ThemeStyle.AlternatingRowsStyle.BackColor = System.Drawing.Color.White;
+            this.dr.ThemeStyle.AlternatingRowsStyle.Font = null;
+            this.dr.ThemeStyle.AlternatingRowsStyle.ForeColor = System.Drawing.Color.Empty;
+            this.dr.ThemeStyle.AlternatingRowsStyle.SelectionBackColor = System.Drawing.Color.Empty;
+            this.dr.ThemeStyle.AlternatingRowsStyle.SelectionForeColor = System.Drawing.Color.Empty;
+            this.dr.ThemeStyle.BackColor = System.Drawing.Color.White;
+            this.dr.ThemeStyle.GridColor = System.Drawing.Color.White;
+            this.dr.ThemeStyle.HeaderStyle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(88)))), ((int)(((byte)(255)))));
+            this.dr.ThemeStyle.HeaderStyle.BorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.dr.ThemeStyle.HeaderStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dr.ThemeStyle.HeaderStyle.ForeColor = System.Drawing.Color.White;
+            this.dr.ThemeStyle.HeaderStyle.HeaightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.dr.ThemeStyle.HeaderStyle.Height = 50;
+            this.dr.ThemeStyle.ReadOnly = true;
+            this.dr.ThemeStyle.RowsStyle.BackColor = System.Drawing.Color.White;
+            this.dr.ThemeStyle.RowsStyle.BorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
+            this.dr.ThemeStyle.RowsStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dr.ThemeStyle.RowsStyle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
+            this.dr.ThemeStyle.RowsStyle.Height = 40;
+            this.dr.ThemeStyle.RowsStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
+            this.dr.ThemeStyle.RowsStyle.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
             // 
             // AddPatients
             // 
@@ -1383,6 +1552,9 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel10.ResumeLayout(false);
+            this.a.ResumeLayout(false);
+            this.a.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dr)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1471,5 +1643,11 @@
         private System.Windows.Forms.RadioButton rMale;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
         private Guna.UI2.WinForms.Guna2PictureBox guna2PictureBox1;
+        private Guna.UI2.WinForms.Guna2Button guna2Button1;
+        private Guna.UI2.WinForms.Guna2Panel a;
+        private Guna.UI2.WinForms.Guna2TextBox search;
+        private Guna.UI2.WinForms.Guna2DateTimePicker d1;
+        private System.Windows.Forms.Label label21;
+        private Guna.UI2.WinForms.Guna2DataGridView dr;
     }
 }

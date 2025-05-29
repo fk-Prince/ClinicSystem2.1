@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using ClinicSystem.Forms.DoctorClinicForm;
 using ClinicSystem.UserLoginForm;
 using Guna.UI2.WinForms;
 
@@ -20,6 +21,7 @@ namespace ClinicSystem.Doctors
 
             SetButtonColor(viewDentistB);
             SetButtonColor(addDentistB);
+            SetButtonColor(guna2Button1);
             //SetButtonColor(button2);
             LoadForm(view);
             lastButtonClicked = viewDentistB;
@@ -91,6 +93,10 @@ namespace ClinicSystem.Doctors
             }
         }
 
-        
+        private void guna2Button1_Click(object sender, EventArgs e)
+        {
+            AvailableDoctors av = new AvailableDoctors();
+            LoadForm(av);
+        }
     }
 }
