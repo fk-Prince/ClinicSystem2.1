@@ -680,7 +680,6 @@ namespace ClinicSystem
                     comboDoctor.Items.Clear();
                     getAvailable();
                     a.Visible = false;
-
                 }
             });
         }
